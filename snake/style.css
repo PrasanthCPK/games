@@ -1,0 +1,376 @@
+/* ============================================================
+   Snake — Retro Arcade
+   Theming is driven by CSS custom properties on [data-theme].
+   Three themes: neon (default), classic, dark.
+   ============================================================ */
+
+/* ---------- Theme palettes ---------- */
+:root,
+[data-theme="neon"] {
+    --bg:           #0a0a14;
+    --bg-grad-1:    #14122b;
+    --bg-grad-2:    #060610;
+    --panel:        rgba(20, 18, 43, 0.72);
+    --panel-border: rgba(120, 90, 255, 0.35);
+    --accent:       #21f3a3;   /* snake / primary */
+    --accent-2:     #6c5cff;   /* secondary glow  */
+    --food:         #ff4d6d;
+    --power:        #ffd23f;
+    --text:         #e7e9ff;
+    --muted:        #9aa0c7;
+    --grid-line:    rgba(108, 92, 255, 0.08);
+    --board-bg:     #0c0b1d;
+    --glow:         0 0 18px rgba(33, 243, 163, 0.55);
+}
+
+[data-theme="classic"] {
+    --bg:           #9bbc0f;
+    --bg-grad-1:    #aac20f;
+    --bg-grad-2:    #8bac0f;
+    --panel:        rgba(48, 67, 9, 0.85);
+    --panel-border: rgba(15, 56, 15, 0.6);
+    --accent:       #0f380f;
+    --accent-2:     #306230;
+    --food:         #0f380f;
+    --power:        #1e5e1e;
+    --text:         #0f380f;
+    --muted:        #2c4a0a;
+    --grid-line:    rgba(15, 56, 15, 0.10);
+    --board-bg:     #8bac0f;
+    --glow:         0 0 0 rgba(0,0,0,0);
+}
+
+[data-theme="dark"] {
+    --bg:           #0d0d0f;
+    --bg-grad-1:    #1a1a1f;
+    --bg-grad-2:    #050506;
+    --panel:        rgba(26, 26, 31, 0.85);
+    --panel-border: rgba(255, 255, 255, 0.12);
+    --accent:       #4ade80;
+    --accent-2:     #38bdf8;
+    --food:         #f87171;
+    --power:        #fbbf24;
+    --text:         #f4f4f5;
+    --muted:        #a1a1aa;
+    --grid-line:    rgba(255, 255, 255, 0.05);
+    --board-bg:     #161618;
+    --glow:         0 0 14px rgba(74, 222, 128, 0.4);
+}
+
+/* ---------- Reset ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+    font-family: "Rajdhani", system-ui, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(1200px 800px at 50% -10%, var(--bg-grad-1), transparent 60%),
+        radial-gradient(900px 700px at 50% 120%, var(--bg-grad-2), transparent 55%),
+        var(--bg);
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow-x: hidden;
+    /* If the layout is ever taller than the screen, let it scroll instead of
+       clipping the top/bottom (flex centering would otherwise hide them). */
+    overflow-y: auto;
+    transition: background 0.4s ease, color 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- App shell ---------- */
+.app {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ---------- HUD / header ---------- */
+.hud {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.title {
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(18px, 5vw, 28px);
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-shadow: var(--glow);
+}
+
+.scoreboard { display: flex; gap: 10px; }
+
+.score-box {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+    backdrop-filter: blur(8px);
+}
+
+.score-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.score-value {
+    font-family: "Press Start 2P", monospace;
+    font-size: 16px;
+    color: var(--text);
+    margin-top: 4px;
+}
+
+/* ---------- Top control bar ---------- */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.control-group { display: flex; align-items: center; gap: 8px; }
+
+.control-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.control-select {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.icon-btn {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+    backdrop-filter: blur(8px);
+}
+.icon-btn:hover { transform: translateY(-1px); box-shadow: var(--glow); }
+.icon-btn:active { transform: translateY(0) scale(0.96); }
+.icon-btn.muted { opacity: 0.5; }
+
+/* ---------- Board ---------- */
+.board-wrap {
+    position: relative;
+    width: 100%;
+    /* Keep the board square, but never let it grow so tall that the HUD,
+       controls and footer get pushed off-screen. --chrome reserves the
+       vertical space used by everything around the board. */
+    max-width: min(100%, calc(100dvh - var(--chrome, 220px)));
+    margin-inline: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--panel-border);
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.45),
+        inset 0 0 60px rgba(0, 0, 0, 0.35);
+    background: var(--board-bg);
+    /* Let our swipe handler own gestures here — no scroll/zoom hijacking. */
+    touch-action: none;
+}
+
+#game {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+/* ---------- Overlays ---------- */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(5, 5, 14, 0.78);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    padding: 20px;
+    transition: opacity 0.25s ease;
+}
+.overlay.hidden { display: none; }
+
+.screen { display: flex; flex-direction: column; align-items: center; gap: 14px; animation: fadeUp 0.35s ease; }
+.screen.hidden { display: none; }
+
+.screen-title {
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(20px, 6vw, 34px);
+    color: var(--accent);
+    text-shadow: var(--glow);
+    letter-spacing: 2px;
+}
+.screen-title.danger { color: var(--food); text-shadow: 0 0 18px rgba(255, 77, 109, 0.6); }
+
+.screen-sub { font-size: 18px; color: var(--text); font-weight: 600; }
+
+.instructions {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+    margin-top: 4px;
+}
+
+.key {
+    display: inline-block;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-weight: 700;
+    color: var(--text);
+    font-size: 13px;
+}
+.pwr { color: var(--power); }
+
+/* ---------- Buttons ---------- */
+.btn {
+    font-family: "Rajdhani", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: var(--text);
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 12px 28px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--glow); }
+.btn:active { transform: translateY(0) scale(0.97); }
+.btn.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #06121a;
+    border: none;
+}
+
+/* ---------- Final scores ---------- */
+.final-scores { display: flex; gap: 28px; margin: 6px 0; }
+.final-scores > div { display: flex; flex-direction: column; gap: 4px; }
+.fs-label { font-size: 12px; letter-spacing: 2px; color: var(--muted); font-weight: 700; }
+.fs-value { font-family: "Press Start 2P", monospace; font-size: 22px; color: var(--text); }
+.new-best { color: var(--power); font-weight: 700; font-size: 16px; animation: pulse 1s ease infinite; }
+
+/* ---------- Achievement toast ---------- */
+.toast {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-120%);
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #06121a;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 12px 22px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.4s ease;
+    pointer-events: none;
+    font-size: 15px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ---------- Touch controls ---------- */
+.touch-controls {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    user-select: none;
+}
+.dpad-mid { display: flex; gap: 8px; align-items: center; }
+.dpad {
+    width: 64px;
+    height: 64px;
+    font-size: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--panel-border);
+    background: var(--panel);
+    color: var(--text);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    backdrop-filter: blur(8px);
+    transition: transform 0.08s ease, background 0.15s ease;
+    touch-action: manipulation;
+}
+.dpad:active { transform: scale(0.92); background: var(--accent-2); color: #06121a; }
+.dpad.center { font-size: 16px; }
+
+/* ---------- Footer ---------- */
+.footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse  { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+
+/* ---------- Responsive: show touch controls on small / touch screens ---------- */
+@media (max-width: 640px), (pointer: coarse) {
+    .touch-controls { display: flex; }
+    .footer { display: none; }
+
+    /* Reserve room for the HUD, top bar and the on-screen D-pad so the square
+       board shrinks to fit the phone instead of overflowing the viewport. */
+    .board-wrap { --chrome: 330px; }
+
+    body { padding: 10px; }
+    .app { gap: 10px; }
+}
+
+@media (max-width: 380px) {
+    .dpad { width: 56px; height: 56px; font-size: 20px; }
+    .score-box { min-width: 58px; padding: 5px 10px; }
+}
+
+/* ---------- Short viewports: trim the D-pad so it never crowds the board ---------- */
+@media (max-height: 700px) and (pointer: coarse) {
+    .board-wrap { --chrome: 300px; }
+    .dpad { width: 52px; height: 52px; font-size: 18px; }
+    .touch-controls { gap: 6px; }
+}

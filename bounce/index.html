@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Responsive, mobile-first viewport. viewport-fit=cover for iOS notch / safe-area. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d1b2a" />
+  <meta name="description" content="Bounce — a cross-platform recreation of the classic mobile bouncing-ball game. Plays on any desktop or mobile browser." />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Bounce" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <title>Bounce</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- The game renders into this canvas. It is sized to the device pixel ratio in main.js. -->
+  <div id="game-root">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- On-screen touch controls. Hidden on non-touch devices via CSS / JS. -->
+    <div id="touch-controls" class="touch-controls" aria-hidden="true">
+      <div class="touch-cluster touch-left">
+        <button class="touch-btn" data-action="left" aria-label="Move left">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" /></svg>
+        </button>
+        <button class="touch-btn" data-action="right" aria-label="Move right">
+          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+      <div class="touch-cluster touch-right">
+        <button class="touch-btn touch-btn-jump" data-action="jump" aria-label="Jump">
+          <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" /></svg>
+        </button>
+      </div>
+      <button class="touch-btn touch-btn-pause" data-action="pause" aria-label="Pause">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" /></svg>
+      </button>
+    </div>
+
+    <!-- Overlay UI (menus). Drawn with DOM so it stays crisp and accessible. -->
+    <div id="overlay" class="overlay">
+      <div class="overlay-panel" id="overlay-panel">
+        <!-- populated by ui.js -->
+      </div>
+    </div>
+
+    <!-- Rotate hint for portrait phones (gameplay favours landscape but works in both). -->
+    <div id="orientation-hint" class="orientation-hint" hidden>
+      <div class="rotate-icon">⟳</div>
+      <p>Rotate your device for the best experience</p>
+      <p class="small">(portrait works too — tap to dismiss)</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0f1020" />
+    <title>Snake — Retro Arcade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- App shell: keeps everything centered on the page -->
+    <div class="app" id="app">
+
+        <!-- ===================== Header / HUD ===================== -->
+        <header class="hud">
+            <h1 class="title">SNAKE</h1>
+            <div class="scoreboard">
+                <div class="score-box">
+                    <span class="score-label">SCORE</span>
+                    <span class="score-value" id="score">0</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">BEST</span>
+                    <span class="score-value" id="highScore">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===================== Top control bar ===================== -->
+        <div class="topbar">
+            <div class="control-group">
+                <label for="theme" class="control-label">Theme</label>
+                <select id="theme" class="control-select" aria-label="Theme selector">
+                    <option value="neon">Neon</option>
+                    <option value="classic">Classic</option>
+                    <option value="dark">Dark</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <button id="soundToggle" class="icon-btn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+                <button id="pauseBtn" class="icon-btn" aria-label="Pause" title="Pause / Resume">⏸</button>
+                <button id="fullscreenBtn" class="icon-btn" aria-label="Fullscreen" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+
+        <!-- ===================== Game board ===================== -->
+        <main class="board-wrap">
+            <canvas id="game" width="480" height="480" aria-label="Snake game board"></canvas>
+
+            <!-- Overlays sit on top of the canvas -->
+            <div class="overlay" id="overlay">
+
+                <!-- Start screen -->
+                <section class="screen" id="startScreen">
+                    <h2 class="screen-title">SNAKE</h2>
+                    <p class="screen-sub">Press <span class="key">Enter</span> to Start</p>
+                    <div class="instructions">
+                        <p><span class="key">↑ ↓ ← →</span> or <span class="key">W A S D</span> to move</p>
+                        <p><span class="key">Space</span> to pause · eat food to grow</p>
+                        <p>Grab golden <span class="pwr">★</span> power-ups for bonus points</p>
+                    </div>
+                    <button class="btn primary" id="startBtn">Start Game</button>
+                </section>
+
+                <!-- Pause screen -->
+                <section class="screen hidden" id="pauseScreen">
+                    <h2 class="screen-title">PAUSED</h2>
+                    <p class="screen-sub">Press <span class="key">Space</span> to resume</p>
+                    <button class="btn" id="resumeBtn">Resume</button>
+                </section>
+
+                <!-- Game over screen -->
+                <section class="screen hidden" id="gameOverScreen">
+                    <h2 class="screen-title danger">GAME OVER</h2>
+                    <div class="final-scores">
+                        <div><span class="fs-label">Score</span><span class="fs-value" id="finalScore">0</span></div>
+                        <div><span class="fs-label">Best</span><span class="fs-value" id="finalHigh">0</span></div>
+                    </div>
+                    <p class="new-best hidden" id="newBest">🏆 New High Score!</p>
+                    <button class="btn primary" id="restartBtn">Play Again</button>
+                </section>
+            </div>
+        </main>
+
+        <!-- ===================== Achievement toast ===================== -->
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+        <!-- ===================== Mobile touch controls ===================== -->
+        <div class="touch-controls" id="touchControls" aria-hidden="false">
+            <button class="dpad up" data-dir="up" aria-label="Up">▲</button>
+            <div class="dpad-mid">
+                <button class="dpad left" data-dir="left" aria-label="Left">◀</button>
+                <button class="dpad center" id="touchPause" aria-label="Pause">❚❚</button>
+                <button class="dpad right" data-dir="right" aria-label="Right">▶</button>
+            </div>
+            <button class="dpad down" data-dir="down" aria-label="Down">▼</button>
+        </div>
+
+        <footer class="footer">
+            <span>Use arrows / WASD · Space to pause · Swipe on mobile</span>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flappy Bird</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Main game wrapper keeps the canvas and overlays centered and scaled together -->
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Score shown during active play -->
+        <div id="hud" class="hidden">
+            <span id="current-score">0</span>
+        </div>
+
+        <!-- Start screen overlay -->
+        <div id="start-screen" class="overlay">
+            <h1 class="title">Flappy<span>Bird</span></h1>
+            <p class="subtitle">Tap, click or press Space to flap</p>
+            <div class="instructions">
+                <p>🐦 Avoid the pipes</p>
+                <p>⌨️ Space / ↑ / Click / Tap to fly</p>
+                <p>⏸️ Press P to pause</p>
+            </div>
+            <button id="start-button" class="btn">Start Game</button>
+            <p class="best-line">Best: <span id="start-best">0</span></p>
+        </div>
+
+        <!-- Game over screen overlay -->
+        <div id="gameover-screen" class="overlay hidden">
+            <h2 class="gameover-title">Game Over</h2>
+            <div class="score-card">
+                <div class="score-row">
+                    <span class="score-label">Score</span>
+                    <span id="final-score" class="score-value">0</span>
+                </div>
+                <div class="score-row">
+                    <span class="score-label">Best</span>
+                    <span id="best-score" class="score-value">0</span>
+                </div>
+            </div>
+            <p id="new-best" class="new-best hidden">🏆 New Best!</p>
+            <button id="restart-button" class="btn">Play Again</button>
+        </div>
+
+        <!-- Pause overlay -->
+        <div id="pause-screen" class="overlay hidden">
+            <h2 class="gameover-title">Paused</h2>
+            <p class="subtitle">Press P to resume</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
