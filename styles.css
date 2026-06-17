@@ -312,6 +312,57 @@ body {
   font-size: 1.05rem;
 }
 
+/* ---------- Coming soon ---------- */
+.coming-soon {
+  max-width: var(--maxw);
+  margin: 3.5rem auto 0;
+}
+
+.section-title {
+  margin: 0 0 1.5rem;
+  text-align: center;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.game-card--soon {
+  cursor: not-allowed;
+  opacity: 0.6;
+  filter: grayscale(0.4);
+}
+/* No lift / glow / icon animation for disabled cards */
+.game-card--soon:hover,
+.game-card--soon:focus-visible {
+  transform: none;
+  background: var(--bg-card);
+  box-shadow: var(--shadow);
+  border-color: var(--border);
+}
+.game-card--soon:hover::before,
+.game-card--soon:focus-visible::before {
+  opacity: 0;
+}
+.game-card--soon:hover .game-icon {
+  transform: none;
+}
+
+.soon-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
   max-width: var(--maxw);
