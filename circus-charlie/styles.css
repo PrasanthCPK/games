@@ -1,0 +1,149 @@
+/* ============================================================
+   Circus Charlie — global styles
+   Retro arcade look: dark "tent" background, glowing frame around
+   the canvas, and responsive scaling that keeps the 16:9 game
+   surface centered on any screen.
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+:root {
+  --circus-red: #e23a3a;
+  --circus-yellow: #ffd23f;
+  --circus-blue: #2b6cff;
+  --circus-purple: #1a0033;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 20%, #3a1a5a 0%, #1a0033 60%, #08001a 100%);
+  font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+/* Centering shell */
+#game-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+/* The frame holds the canvas and overlays. We scale it with JS by
+   setting width/height inline to keep a perfect 16:9 ratio. */
+#stage-frame {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 4px #ffd23f,
+    0 0 0 9px #e23a3a,
+    0 0 40px 6px rgba(255, 210, 63, 0.35),
+    0 18px 50px rgba(0, 0, 0, 0.6);
+  background: #000;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #000;
+}
+
+/* ---------- Touch controls ---------- */
+#touch-controls {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* only the buttons capture touches */
+  z-index: 20;
+}
+
+#touch-controls.hidden { display: none; }
+
+.touch-cluster {
+  position: absolute;
+  bottom: 3%;
+  display: flex;
+  gap: 14px;
+  pointer-events: none;
+}
+
+.touch-cluster.left { left: 3%; }
+.touch-cluster.right { right: 3%; }
+
+.touch-btn {
+  pointer-events: auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  background: rgba(43, 108, 255, 0.4);
+  color: #fff;
+  font-size: 26px;
+  font-weight: bold;
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.05s, background 0.05s;
+}
+
+.touch-btn:active { transform: scale(0.9); background: rgba(255, 210, 63, 0.6); }
+
+.touch-btn.jump {
+  width: 96px;
+  height: 96px;
+  font-size: 20px;
+  background: rgba(226, 58, 58, 0.5);
+}
+
+.touch-btn.pause {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  width: 52px;
+  height: 52px;
+  font-size: 18px;
+  bottom: auto;
+}
+
+/* ---------- Rotate hint ---------- */
+#rotate-hint {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  background: rgba(8, 0, 26, 0.94);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+#rotate-hint.hidden { display: none; }
+.rotate-icon { font-size: 60px; animation: rotate-wobble 1.6s ease-in-out infinite; }
+#rotate-hint p { margin-top: 16px; font-size: 18px; color: var(--circus-yellow); }
+
+@keyframes rotate-wobble {
+  0%, 100% { transform: rotate(-12deg); }
+  50% { transform: rotate(78deg); }
+}
+
+/* Show big touch buttons only on coarse (touch) pointers */
+@media (pointer: coarse) {
+  #touch-controls:not(.force-hidden) { display: block; }
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="A polished retro-modern Minesweeper game built with vanilla HTML, CSS, and JavaScript." />
+  <meta name="theme-color" content="#1f6feb" />
+  <title>Minesweeper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Pixel-inspired typography. Falls back to a monospace stack if offline. -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#board">Skip to game board</a>
+
+  <div class="app">
+    <header class="topbar">
+      <h1 class="title">
+        <span class="title-icon" aria-hidden="true">💣</span>
+        Minesweeper
+      </h1>
+
+      <div class="topbar-actions">
+        <button id="theme-toggle" class="icon-btn" type="button"
+                aria-pressed="false" title="Toggle dark mode">
+          <span class="icon-btn__icon" aria-hidden="true">🌙</span>
+          <span class="visually-hidden">Toggle dark mode</span>
+        </button>
+        <button id="sound-toggle" class="icon-btn" type="button"
+                aria-pressed="true" title="Toggle sound">
+          <span class="icon-btn__icon" aria-hidden="true">🔊</span>
+          <span class="visually-hidden">Toggle sound</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Game controls">
+      <div class="difficulty" role="group" aria-label="Difficulty">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" class="select">
+          <option value="beginner">Beginner · 9×9 · 10</option>
+          <option value="intermediate">Intermediate · 16×16 · 40</option>
+          <option value="expert">Expert · 30×16 · 99</option>
+          <option value="custom">Custom…</option>
+        </select>
+      </div>
+
+      <fieldset id="custom-settings" class="custom-settings" hidden>
+        <legend class="visually-hidden">Custom difficulty</legend>
+        <label>Rows <input id="custom-rows" type="number" min="5" max="40" value="12" /></label>
+        <label>Cols <input id="custom-cols" type="number" min="5" max="50" value="12" /></label>
+        <label>Mines <input id="custom-mines" type="number" min="1" max="500" value="20" /></label>
+        <button id="custom-apply" class="btn btn--secondary" type="button">Apply</button>
+      </fieldset>
+
+      <button id="new-game" class="btn btn--primary" type="button">New Game</button>
+    </section>
+
+    <section class="hud" aria-label="Game status">
+      <div class="hud-item" title="Mines remaining (mines minus flags)">
+        <span class="hud-icon" aria-hidden="true">💣</span>
+        <span id="mine-counter" class="hud-value" aria-live="polite">010</span>
+      </div>
+
+      <button id="status-face" class="status-face" type="button"
+              title="New game" aria-label="Game status — click for a new game">🙂</button>
+
+      <div class="hud-item" title="Elapsed time in seconds">
+        <span class="hud-icon" aria-hidden="true">⏱️</span>
+        <span id="timer" class="hud-value" aria-live="off">000</span>
+      </div>
+    </section>
+
+    <p id="status-message" class="status-message" role="status" aria-live="polite">
+      Pick a difficulty and click any cell to start.
+    </p>
+
+    <main class="board-wrap">
+      <div id="board" class="board" role="grid" aria-label="Minesweeper board" tabindex="0"></div>
+    </main>
+
+    <section class="scores" aria-label="Best times">
+      <h2 class="scores-title">🏆 Best Times</h2>
+      <table class="scores-table">
+        <thead>
+          <tr><th>Difficulty</th><th>Best</th></tr>
+        </thead>
+        <tbody id="scores-body">
+          <!-- Filled in by JS -->
+        </tbody>
+      </table>
+      <button id="clear-scores" class="btn btn--ghost" type="button">Clear best times</button>
+    </section>
+
+    <footer class="help">
+      <p><strong>Desktop:</strong> Left-click reveal · Right-click flag · Arrow keys + Enter/F to play with the keyboard.</p>
+      <p><strong>Mobile:</strong> Tap to reveal · Long-press to flag.</p>
+    </footer>
+  </div>
+
+  <!-- Animated end-of-game overlay -->
+  <div id="overlay" class="overlay" hidden>
+    <div class="overlay__card" role="alertdialog" aria-modal="true" aria-labelledby="overlay-title">
+      <div id="overlay-emoji" class="overlay__emoji" aria-hidden="true">🎉</div>
+      <h2 id="overlay-title" class="overlay__title">You Win!</h2>
+      <p id="overlay-text" class="overlay__text"></p>
+      <button id="overlay-btn" class="btn btn--primary" type="button">Play Again</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

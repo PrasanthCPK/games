@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1a0033" />
+  <title>Circus Charlie — Browser Remake</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ============================================================
+       Game shell. The <canvas> is the actual game surface; it has a
+       fixed internal resolution (see game.js) and is scaled with CSS
+       to fit any screen while preserving aspect ratio.
+       ============================================================ -->
+  <div id="game-shell">
+    <div id="stage-frame">
+      <canvas id="game-canvas" width="960" height="540"></canvas>
+
+      <!-- On-screen touch controls. Hidden on desktop via CSS, shown
+           on touch-capable devices. Each control reports to InputManager. -->
+      <div id="touch-controls" class="hidden">
+        <div class="touch-cluster left">
+          <button class="touch-btn" data-action="left" aria-label="Move left">◀</button>
+          <button class="touch-btn" data-action="right" aria-label="Move right">▶</button>
+        </div>
+        <div class="touch-cluster right">
+          <button class="touch-btn jump" data-action="jump" aria-label="Jump">JUMP</button>
+        </div>
+        <button class="touch-btn pause" data-action="pause" aria-label="Pause">II</button>
+      </div>
+
+      <!-- Rotate hint for portrait phones -->
+      <div id="rotate-hint" class="hidden">
+        <div class="rotate-icon">📱</div>
+        <p>Rotate your device for the best experience</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load order matters: utilities first, then systems, then stages,
+       then the game controller and bootstrap. Plain scripts (not ES
+       modules) so the game runs directly from a file:// folder with no
+       server. -->
+  <script src="js/utils.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/stages.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

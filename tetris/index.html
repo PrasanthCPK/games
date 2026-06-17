@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="A modern retro-arcade Tetris built with vanilla HTML, CSS and JavaScript." />
+  <title>NEON TETRIS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <main class="game-shell">
+    <h1 class="title">NEON&nbsp;TETRIS</h1>
+
+    <div class="layout">
+      <!-- Left column: Hold + Stats -->
+      <aside class="side side-left">
+        <section class="panel" aria-label="Hold piece">
+          <h2 class="panel-title">HOLD</h2>
+          <canvas id="hold" width="120" height="120" class="mini-canvas"></canvas>
+        </section>
+
+        <section class="panel stats" aria-label="Statistics">
+          <div class="stat">
+            <span class="stat-label">SCORE</span>
+            <span class="stat-value" id="score">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">HIGH</span>
+            <span class="stat-value" id="highscore">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">LEVEL</span>
+            <span class="stat-value" id="level">1</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">LINES</span>
+            <span class="stat-value" id="lines">0</span>
+          </div>
+        </section>
+      </aside>
+
+      <!-- Center: Board -->
+      <section class="board-wrap" aria-label="Game board">
+        <canvas id="board" width="300" height="600"></canvas>
+
+        <!-- Overlays -->
+        <div class="overlay" id="overlay-start">
+          <h2>NEON TETRIS</h2>
+          <p>Stack the blocks. Clear the lines.</p>
+          <button class="btn btn-primary" id="btn-start">START</button>
+          <p class="hint">Press <kbd>Enter</kbd> or click START</p>
+        </div>
+
+        <div class="overlay hidden" id="overlay-pause">
+          <h2>PAUSED</h2>
+          <p>Take a breath.</p>
+          <button class="btn" id="btn-resume">RESUME</button>
+        </div>
+
+        <div class="overlay hidden" id="overlay-gameover">
+          <h2>GAME OVER</h2>
+          <p>Final Score: <span id="final-score">0</span></p>
+          <p id="new-highscore" class="hidden highlight">★ NEW HIGH SCORE ★</p>
+          <button class="btn btn-primary" id="btn-restart">PLAY AGAIN</button>
+        </div>
+      </section>
+
+      <!-- Right column: Next queue + controls -->
+      <aside class="side side-right">
+        <section class="panel" aria-label="Next pieces">
+          <h2 class="panel-title">NEXT</h2>
+          <canvas id="next" width="120" height="300" class="mini-canvas"></canvas>
+        </section>
+
+        <section class="panel controls-panel" aria-label="Game controls">
+          <button class="btn" id="btn-pause">PAUSE</button>
+          <button class="btn" id="btn-mute" aria-pressed="false">🔊 SOUND</button>
+        </section>
+
+        <section class="panel help" aria-label="Controls help">
+          <h2 class="panel-title">CONTROLS</h2>
+          <ul class="help-list">
+            <li><kbd>←</kbd><kbd>→</kbd> Move</li>
+            <li><kbd>↓</kbd> Soft drop</li>
+            <li><kbd>↑</kbd> Rotate</li>
+            <li><kbd>Space</kbd> Hard drop</li>
+            <li><kbd>C</kbd> Hold</li>
+            <li><kbd>P</kbd> Pause</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Mobile touch controls -->
+    <div class="touch-controls" aria-label="Touch controls">
+      <button class="touch-btn" data-action="left" aria-label="Move left">◀</button>
+      <button class="touch-btn" data-action="rotate" aria-label="Rotate">⟳</button>
+      <button class="touch-btn" data-action="right" aria-label="Move right">▶</button>
+      <button class="touch-btn" data-action="soft" aria-label="Soft drop">▼</button>
+      <button class="touch-btn" data-action="hold" aria-label="Hold">HOLD</button>
+      <button class="touch-btn" data-action="hard" aria-label="Hard drop">⤓</button>
+      <button class="touch-btn" data-action="pause" aria-label="Pause">❚❚</button>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

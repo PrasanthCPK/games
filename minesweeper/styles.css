@@ -1,0 +1,454 @@
+/* =========================================================================
+   Minesweeper — styles.css
+   Retro-modern theme with light/dark support, responsive layout, and
+   smooth reveal animations. All values are framework-free vanilla CSS.
+   ========================================================================= */
+
+/* ----- Design tokens ---------------------------------------------------- */
+:root {
+  --font-pixel: "Press Start 2P", "Courier New", monospace;
+  --font-display: "VT323", "Courier New", monospace;
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Light theme */
+  --bg: #e9eef5;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #f6f9ff 0%, #dde6f2 100%);
+  --surface: #ffffff;
+  --surface-2: #f1f4f9;
+  --text: #1c2330;
+  --text-muted: #5a6678;
+  --border: #c4cedd;
+  --shadow: 0 10px 30px rgba(31, 45, 70, 0.12);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  --cell-size: 32px;
+  --cell-hidden: linear-gradient(145deg, #f7fafc, #cdd6e4);
+  --cell-hidden-hover: linear-gradient(145deg, #ffffff, #d8e0ee);
+  --cell-revealed: #d9e0ea;
+  --cell-border-light: #ffffff;
+  --cell-border-dark: #aab6c8;
+  --cell-revealed-border: #c2cad6;
+
+  --accent: #1f6feb;
+  --accent-2: #14532d;
+  --danger: #e5484d;
+  --flag: #e5484d;
+
+  /* Classic number colours */
+  --n1: #1976d2;
+  --n2: #388e3c;
+  --n3: #d32f2f;
+  --n4: #7b1fa2;
+  --n5: #c62828;
+  --n6: #0097a7;
+  --n7: #424242;
+  --n8: #9e9e9e;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d1117;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #161b22 0%, #0a0d12 100%);
+  --surface: #161b22;
+  --surface-2: #1c232d;
+  --text: #e6edf3;
+  --text-muted: #9aa7b8;
+  --border: #2c333d;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --cell-hidden: linear-gradient(145deg, #2b333f, #1a2029);
+  --cell-hidden-hover: linear-gradient(145deg, #333d4b, #20262f);
+  --cell-revealed: #11161d;
+  --cell-border-light: #3a4452;
+  --cell-border-dark: #0c0f14;
+  --cell-revealed-border: #232a33;
+
+  --n1: #58a6ff;
+  --n2: #56d364;
+  --n3: #ff7b72;
+  --n4: #bc8cff;
+  --n5: #ff9492;
+  --n6: #39d0d8;
+  --n7: #c9d1d9;
+  --n8: #8b949e;
+}
+
+/* ----- Base ------------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--text);
+  background: var(--bg);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  /* Stop the whole page bouncing while interacting with the board on mobile. */
+  overscroll-behavior: contain;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.visually-hidden,
+.skip-link:not(:focus) {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px; top: 12px;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  z-index: 50;
+}
+
+.app {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ----- Top bar ---------------------------------------------------------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--font-pixel);
+  font-size: clamp(0.9rem, 3.5vw, 1.4rem);
+  margin: 0;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.title-icon { font-size: 1.2em; }
+
+.topbar-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-inset);
+  transition: transform 0.15s ease, background 0.2s ease;
+}
+.icon-btn:hover { transform: translateY(-2px); }
+.icon-btn:active { transform: translateY(0); }
+
+/* ----- Controls --------------------------------------------------------- */
+.controls,
+.custom-settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+
+.difficulty { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 220px; }
+.difficulty label { font-size: 0.85rem; color: var(--text-muted); }
+
+.select {
+  flex: 1;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.custom-settings { margin: 0; border-style: dashed; }
+.custom-settings legend { padding: 0; }
+.custom-settings label {
+  display: flex; flex-direction: column;
+  font-size: 0.75rem; color: var(--text-muted); gap: 4px;
+}
+.custom-settings input {
+  width: 80px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.2s ease, background 0.2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn--primary { background: var(--accent); color: #fff; box-shadow: 0 6px 16px rgba(31, 111, 235, 0.35); }
+.btn--primary:hover { filter: brightness(1.05); }
+.btn--secondary { background: var(--surface-2); color: var(--text); border-color: var(--border); }
+.btn--ghost { background: transparent; color: var(--text-muted); border-color: var(--border); }
+
+/* ----- HUD -------------------------------------------------------------- */
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 16px;
+  box-shadow: var(--shadow);
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 6px 12px;
+  min-width: 90px;
+}
+.hud-icon { font-size: 1.1rem; }
+.hud-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: #ff3b30;
+  letter-spacing: 2px;
+  min-width: 3ch;
+  text-align: right;
+  text-shadow: 0 0 6px rgba(255, 59, 48, 0.55);
+}
+
+.status-face {
+  width: 52px; height: 52px;
+  font-size: 1.7rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--cell-hidden);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  line-height: 1;
+}
+.status-face:hover { transform: scale(1.08); }
+.status-face:active { transform: scale(0.95); }
+
+.status-message {
+  text-align: center;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  min-height: 1.2em;
+}
+
+/* ----- Board ------------------------------------------------------------ */
+.board-wrap {
+  display: flex;
+  justify-content: center;
+  overflow: auto;            /* allow large expert boards to scroll */
+  padding: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.board {
+  display: grid;
+  gap: 3px;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  /* Block native gestures (scroll, double-tap zoom) inside the board so the
+     game owns the touch interaction. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+.board:focus-visible { box-shadow: var(--shadow), 0 0 0 3px var(--accent); }
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-pixel);
+  font-size: calc(var(--cell-size) * 0.42);
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--cell-hidden);
+  /* 3D bevel reminiscent of the classic look. */
+  border-top: 2px solid var(--cell-border-light);
+  border-left: 2px solid var(--cell-border-light);
+  border-right: 2px solid var(--cell-border-dark);
+  border-bottom: 2px solid var(--cell-border-dark);
+  transition: background 0.12s ease, transform 0.08s ease;
+  user-select: none;
+}
+.cell:hover:not(.revealed) { background: var(--cell-hidden-hover); }
+.cell:active:not(.revealed) { transform: scale(0.92); }
+
+.cell.revealed {
+  background: var(--cell-revealed);
+  border: 1px solid var(--cell-revealed-border);
+  cursor: default;
+  /* Pop-in reveal animation. */
+  animation: reveal-pop 0.18s ease-out;
+}
+
+.cell.flagged { color: var(--flag); }
+.cell.keyboard-focus { box-shadow: 0 0 0 3px var(--accent); z-index: 2; }
+
+.cell.mine {
+  background: var(--cell-revealed);
+  border: 1px solid var(--cell-revealed-border);
+}
+.cell.mine-hit {
+  background: var(--danger);
+  animation: shake 0.4s;
+}
+.cell.mine-wrong { background: #b07; }
+.cell.mine-wrong::after { content: "❌"; position: absolute; }
+
+/* Number colours */
+.cell[data-count="1"] { color: var(--n1); }
+.cell[data-count="2"] { color: var(--n2); }
+.cell[data-count="3"] { color: var(--n3); }
+.cell[data-count="4"] { color: var(--n4); }
+.cell[data-count="5"] { color: var(--n5); }
+.cell[data-count="6"] { color: var(--n6); }
+.cell[data-count="7"] { color: var(--n7); }
+.cell[data-count="8"] { color: var(--n8); }
+
+@keyframes reveal-pop {
+  0%   { transform: scale(0.6); opacity: 0.3; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ----- Scores ----------------------------------------------------------- */
+.scores {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow);
+}
+.scores-title { margin: 0 0 10px; font-size: 1rem; }
+.scores-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.scores-table th, .scores-table td {
+  text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border);
+}
+.scores-table th { color: var(--text-muted); font-weight: 600; }
+.scores-table td:last-child { font-family: var(--font-display); font-size: 1.2rem; text-align: right; }
+#clear-scores { margin-top: 12px; }
+
+/* ----- Help footer ------------------------------------------------------ */
+.help {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.help p { margin: 2px 0; }
+
+/* ----- End-of-game overlay --------------------------------------------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 12, 20, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  animation: fade-in 0.3s ease;
+}
+.overlay[hidden] { display: none; }
+
+.overlay__card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 36px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  max-width: 90vw;
+  animation: card-pop 0.4s cubic-bezier(0.18, 1.3, 0.5, 1);
+}
+.overlay__emoji { font-size: 4rem; animation: bounce 1s ease infinite; }
+.overlay__title { font-family: var(--font-pixel); font-size: 1.2rem; margin: 12px 0 8px; }
+.overlay__text { color: var(--text-muted); margin: 0 0 20px; }
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes card-pop {
+  0% { transform: scale(0.7) translateY(20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* ----- Responsive ------------------------------------------------------- */
+@media (max-width: 600px) {
+  body { padding: 10px; }
+  :root { --cell-size: 30px; }
+  .title { font-size: 1rem; }
+  .controls { flex-direction: column; align-items: stretch; }
+  .difficulty { min-width: 0; }
+  .hud-value { font-size: 1.5rem; }
+}
+
+@media (max-width: 400px) {
+  :root { --cell-size: 26px; }
+}
+
+/* Honour reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

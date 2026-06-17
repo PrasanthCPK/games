@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a0805" />
+  <title>Prince of Persia — Homage</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="stage">
+    <!-- The game renders here at a fixed low resolution; CSS scales it up. -->
+    <canvas id="game" width="320" height="256"></canvas>
+
+    <!-- Full-screen menu overlays (DOM). Shown/hidden by game.js. -->
+    <div id="overlay" class="hidden">
+      <!-- Main menu -->
+      <div id="screen-main" class="screen">
+        <h1>PRINCE<span>OF</span>PERSIA</h1>
+        <p class="subtitle">A browser homage to the 1989 classic</p>
+        <div class="menu">
+          <button id="btn-start">New Game</button>
+          <button id="btn-continue" style="display:none">Continue</button>
+          <button id="btn-challenge">Challenge Mode</button>
+          <button id="btn-leaderboard">Leaderboard</button>
+          <button id="btn-settings">Settings</button>
+        </div>
+        <p class="hint">Arrows/WASD move · Space jump · Shift action · Ctrl sword · B block · Esc pause</p>
+      </div>
+
+      <!-- Pause -->
+      <div id="screen-pause" class="screen">
+        <h2>Paused</h2>
+        <div class="menu">
+          <button id="btn-resume">Resume</button>
+          <button id="btn-restart">Restart Level</button>
+          <button id="btn-pause-settings">Settings</button>
+          <button id="btn-quit">Quit to Menu</button>
+        </div>
+      </div>
+
+      <!-- Game over -->
+      <div id="screen-gameover" class="screen">
+        <h2 class="danger">You Died</h2>
+        <div class="menu">
+          <button id="btn-retry">Retry Level</button>
+          <button id="btn-go-menu">Main Menu</button>
+        </div>
+      </div>
+
+      <!-- Victory -->
+      <div id="screen-victory" class="screen">
+        <h2 class="gold">Victory!</h2>
+        <p>Jaffar is defeated. The princess is saved.</p>
+        <p id="vic-stats"></p>
+        <div id="vic-name-row" class="name-row" style="display:none">
+          <label>Enter name: <input id="vic-name" maxlength="8" value="AAA" /></label>
+          <button id="btn-submit">Submit Score</button>
+        </div>
+        <div class="menu">
+          <button id="btn-vic-menu">Main Menu</button>
+        </div>
+      </div>
+
+      <!-- Leaderboard -->
+      <div id="screen-leaderboard" class="screen">
+        <h2>Leaderboard</h2>
+        <ul id="lb-list" class="leaderboard"></ul>
+        <div class="menu">
+          <button id="btn-lb-back">Back</button>
+        </div>
+      </div>
+
+      <!-- Settings -->
+      <div id="screen-settings" class="screen">
+        <h2>Settings</h2>
+        <div class="sliders">
+          <label>Master <input id="vol-master" type="range" min="0" max="1" step="0.05" value="0.8" /></label>
+          <label>SFX <input id="vol-sfx" type="range" min="0" max="1" step="0.05" value="0.9" /></label>
+          <label>Music <input id="vol-music" type="range" min="0" max="1" step="0.05" value="0.5" /></label>
+        </div>
+        <div class="menu">
+          <button id="btn-settings-back">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- On-screen touch controls (auto-shown on touch devices). -->
+    <div id="touch-controls">
+      <div class="dpad">
+        <button class="tbtn up" data-action="up">▲</button>
+        <button class="tbtn left" data-action="left">◀</button>
+        <button class="tbtn down" data-action="down">▼</button>
+        <button class="tbtn right" data-action="right">▶</button>
+      </div>
+      <div class="abuttons">
+        <button class="tbtn act" data-action="action">GRAB</button>
+        <button class="tbtn jump" data-action="jump">JUMP</button>
+        <button class="tbtn sword" data-action="sword">SWORD</button>
+        <button class="tbtn block" data-action="block">BLOCK</button>
+      </div>
+      <button class="tbtn pausebtn" data-action="pause">II</button>
+    </div>
+  </div>
+
+  <!-- Engine: load order matters (globals, no modules). -->
+  <script src="js/utils.js"></script>
+  <script src="js/tiles.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/animation.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/level.js"></script>
+  <script src="js/camera.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/enemy.js"></script>
+  <script src="js/embedded-levels.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
