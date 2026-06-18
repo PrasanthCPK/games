@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#05060f" />
+  <title>Neon Pinball</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- The playfield -->
+    <div id="stage">
+      <canvas id="game"></canvas>
+
+      <!-- Heads-up display -->
+      <div id="hud" class="hud">
+        <div class="hud-col left">
+          <div class="hud-item"><span class="hud-label">SCORE</span><span id="hud-score" class="hud-value">0</span></div>
+          <div class="hud-item small"><span class="hud-label">HIGH</span><span id="hud-high" class="hud-value">0</span></div>
+        </div>
+        <div class="hud-col center">
+          <div id="hud-modes" class="hud-modes"></div>
+        </div>
+        <div class="hud-col right">
+          <div class="hud-item"><span class="hud-label">BALL</span><span id="hud-ball" class="hud-value">1</span></div>
+          <div class="hud-item small"><span class="hud-label">MULT</span><span id="hud-mult" class="hud-value">x1</span></div>
+          <button id="btn-pause" class="icon-btn" aria-label="Pause">II</button>
+        </div>
+      </div>
+
+      <!-- Flash announcements (multiball / jackpot / wizard) -->
+      <div id="announce" class="announce hidden"><span id="announce-text"></span></div>
+
+      <!-- Ball-save / message ticker -->
+      <div id="ticker" class="ticker hidden"></div>
+
+      <!-- Mobile touch zones (invisible) -->
+      <div id="touch-left" class="touch-zone" aria-hidden="true"></div>
+      <div id="touch-right" class="touch-zone" aria-hidden="true"></div>
+
+      <!-- ===================== SCREENS ===================== -->
+
+      <!-- Start screen -->
+      <div id="screen-start" class="screen">
+        <div class="panel">
+          <h1 class="title">NEON<span>PINBALL</span></h1>
+          <p class="subtitle">A browser pinball machine</p>
+          <button id="btn-play" class="btn primary">PLAY</button>
+
+          <div class="theme-picker">
+            <span class="pick-label">TABLE THEME</span>
+            <div id="theme-list" class="theme-list"></div>
+          </div>
+
+          <div class="controls-guide">
+            <h3>CONTROLS</h3>
+            <ul>
+              <li><b>← / Z</b> &nbsp;Left flipper</li>
+              <li><b>→ / X</b> &nbsp;Right flipper</li>
+              <li><b>Space</b> &nbsp;Hold &amp; release plunger</li>
+              <li><b>P</b> &nbsp;Pause</li>
+              <li class="mobile-only"><b>Tap L/R</b> &nbsp;Flippers · <b>Drag bottom</b> Plunger</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pause screen -->
+      <div id="screen-pause" class="screen hidden">
+        <div class="panel">
+          <h2 class="title small">PAUSED</h2>
+          <button id="btn-resume" class="btn primary">RESUME</button>
+          <button id="btn-restart" class="btn">RESTART</button>
+          <div class="settings">
+            <label class="row">
+              <span>Sound</span>
+              <input id="opt-mute" type="checkbox" checked />
+            </label>
+            <label class="row">
+              <span>Volume</span>
+              <input id="opt-volume" type="range" min="0" max="100" value="65" />
+            </label>
+            <label class="row">
+              <span>Theme</span>
+              <select id="opt-theme"></select>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game over screen -->
+      <div id="screen-over" class="screen hidden">
+        <div class="panel">
+          <h2 class="title small">GAME OVER</h2>
+          <div class="final">
+            <div><span class="hud-label">FINAL SCORE</span><span id="final-score" class="big">0</span></div>
+            <div><span class="hud-label">HIGH SCORE</span><span id="final-high" class="big">0</span></div>
+            <div id="final-new" class="new-high hidden">★ NEW HIGH SCORE ★</div>
+          </div>
+          <button id="btn-retry" class="btn primary">RETRY</button>
+          <button id="btn-menu" class="btn">MAIN MENU</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

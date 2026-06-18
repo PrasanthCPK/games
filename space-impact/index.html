@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#02060a" />
+<title>Space Impact</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="game-wrapper">
+  <canvas id="game"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div class="hud-row">
+      <div class="hud-block">
+        <div class="hud-label">SCORE</div>
+        <div class="hud-value" id="hud-score">0</div>
+      </div>
+      <div class="hud-block">
+        <div class="hud-label">HIGH</div>
+        <div class="hud-value" id="hud-high">0</div>
+      </div>
+      <div class="hud-block">
+        <div class="hud-label">STAGE</div>
+        <div class="hud-value" id="hud-stage">1</div>
+      </div>
+      <div class="hud-block">
+        <div class="hud-label">WEAPON</div>
+        <div class="hud-value" id="hud-weapon">SINGLE</div>
+      </div>
+    </div>
+    <div class="hud-bars">
+      <div class="bar-wrap">
+        <span class="bar-tag">HP</span>
+        <div class="bar"><div class="bar-fill hp" id="bar-hp"></div></div>
+      </div>
+      <div class="bar-wrap">
+        <span class="bar-tag">SH</span>
+        <div class="bar"><div class="bar-fill shield" id="bar-shield"></div></div>
+      </div>
+      <div class="lives" id="hud-lives"></div>
+    </div>
+    <div id="combo-display" class="hidden"></div>
+    <div id="boss-bar-wrap" class="hidden">
+      <div class="boss-name" id="boss-name">BOSS</div>
+      <div class="boss-bar"><div class="boss-bar-fill" id="boss-bar"></div></div>
+    </div>
+    <button id="pause-btn" class="icon-btn" title="Pause (P)">II</button>
+  </div>
+
+  <!-- Mobile controls -->
+  <div id="touch-controls" class="hidden">
+    <div id="joystick"><div id="joystick-knob"></div></div>
+    <button id="fire-btn">FIRE</button>
+  </div>
+
+  <!-- Start screen -->
+  <div id="screen-start" class="screen">
+    <div class="title-glow">
+      <h1 class="game-title">SPACE<span>IMPACT</span></h1>
+    </div>
+    <p class="subtitle">A retro Nokia-inspired space shooter</p>
+    <button class="btn primary" id="btn-start">START GAME</button>
+    <div class="mode-select">
+      <button class="btn mode-btn active" data-mode="campaign">CAMPAIGN</button>
+      <button class="btn mode-btn" data-mode="endless">ENDLESS</button>
+    </div>
+    <div class="theme-select">
+      <span>Display:</span>
+      <button class="btn small theme-btn active" data-theme="hd">MODERN HD</button>
+      <button class="btn small theme-btn" data-theme="classic">CLASSIC NOKIA</button>
+    </div>
+    <div class="controls-guide">
+      <h3>CONTROLS</h3>
+      <div class="ctrl-cols">
+        <div>
+          <strong>Desktop</strong>
+          <p>Arrows / WASD — Move</p>
+          <p>Space — Fire</p>
+          <p>P — Pause</p>
+        </div>
+        <div>
+          <strong>Mobile</strong>
+          <p>Joystick — Move</p>
+          <p>Fire button — Shoot</p>
+          <p>Auto-fire available</p>
+        </div>
+      </div>
+    </div>
+    <div class="audio-controls">
+      <label><input type="checkbox" id="chk-mute" /> Mute</label>
+      <label>Volume <input type="range" id="vol-slider" min="0" max="100" value="60" /></label>
+      <label><input type="checkbox" id="chk-autofire" /> Auto-fire</label>
+    </div>
+  </div>
+
+  <!-- Pause screen -->
+  <div id="screen-pause" class="screen hidden">
+    <h2>PAUSED</h2>
+    <button class="btn primary" id="btn-resume">RESUME</button>
+    <button class="btn" id="btn-pause-restart">RESTART</button>
+    <div class="audio-controls">
+      <label><input type="checkbox" id="chk-mute2" /> Mute</label>
+      <label>Volume <input type="range" id="vol-slider2" min="0" max="100" value="60" /></label>
+      <label><input type="checkbox" id="chk-autofire2" /> Auto-fire</label>
+    </div>
+    <button class="btn" id="btn-pause-quit">QUIT TO MENU</button>
+  </div>
+
+  <!-- Stage complete -->
+  <div id="screen-stage" class="screen hidden">
+    <h2 id="stage-title">STAGE 1 COMPLETE</h2>
+    <div class="stat-list">
+      <div><span>Enemies Destroyed</span><span id="stat-kills">0</span></div>
+      <div><span>Accuracy</span><span id="stat-acc">0%</span></div>
+      <div><span>Bonus Score</span><span id="stat-bonus">0</span></div>
+    </div>
+    <button class="btn primary" id="btn-next">NEXT STAGE</button>
+  </div>
+
+  <!-- Boss warning -->
+  <div id="screen-boss" class="screen hidden boss-warning">
+    <div class="warning-text">⚠ WARNING ⚠</div>
+    <h2 id="boss-intro">MASSIVE ENEMY APPROACHING</h2>
+  </div>
+
+  <!-- Game over -->
+  <div id="screen-over" class="screen hidden">
+    <h2 class="over-title">GAME OVER</h2>
+    <div class="stat-list">
+      <div><span>Final Score</span><span id="over-score">0</span></div>
+      <div><span>High Score</span><span id="over-high">0</span></div>
+      <div><span>Stage Reached</span><span id="over-stage">1</span></div>
+    </div>
+    <div id="achievements-unlocked"></div>
+    <button class="btn primary" id="btn-retry">RETRY</button>
+    <button class="btn" id="btn-menu">MAIN MENU</button>
+  </div>
+
+  <!-- Victory -->
+  <div id="screen-victory" class="screen hidden">
+    <h2 class="over-title win">VICTORY!</h2>
+    <p class="subtitle">You cleared every stage. The galaxy is safe.</p>
+    <div class="stat-list">
+      <div><span>Final Score</span><span id="win-score">0</span></div>
+      <div><span>High Score</span><span id="win-high">0</span></div>
+    </div>
+    <button class="btn primary" id="btn-win-menu">MAIN MENU</button>
+  </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#000000" />
+<title>Neon Pac-Man</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="crt">
+    <!-- Heads-up display -->
+    <header id="hud">
+      <div class="hud-group">
+        <div class="hud-item"><span class="hud-label">Score</span><span id="score" class="hud-value">0</span></div>
+        <div class="hud-item"><span class="hud-label">High</span><span id="highScore" class="hud-value">0</span></div>
+        <div class="hud-item"><span class="hud-label">Level</span><span id="level" class="hud-value">1</span></div>
+        <div class="hud-item"><span class="hud-label">Lives</span><span id="lives" class="hud-value lives">●●●</span></div>
+      </div>
+      <div class="hud-buttons">
+        <button id="btnPause" class="icon-btn" title="Pause">⏸</button>
+        <button id="btnMute" class="icon-btn" title="Mute">🔊</button>
+        <button id="btnCrt" class="icon-btn active" title="CRT effect">📺</button>
+        <button id="btnFull" class="icon-btn" title="Fullscreen">⛶</button>
+        <button id="btnRestart" class="icon-btn" title="Restart">↻</button>
+      </div>
+    </header>
+
+    <!-- Game stage -->
+    <main id="stage">
+      <canvas id="game" width="560" height="600"></canvas>
+
+      <!-- Overlay screens -->
+      <div id="overlay" class="overlay">
+        <!-- Start screen -->
+        <section id="screen-start" class="screen active">
+          <h1 class="title">PAC<span>-</span>MAN</h1>
+          <p class="subtitle">Neon Arcade Edition</p>
+          <button class="primary-btn" data-action="start">PLAY</button>
+          <div class="hint">
+            <p>Desktop: Arrow Keys / WASD</p>
+            <p>Mobile: Swipe or use the D-pad</p>
+          </div>
+        </section>
+
+        <!-- Pause screen -->
+        <section id="screen-pause" class="screen">
+          <h2 class="title small">PAUSED</h2>
+          <button class="primary-btn" data-action="resume">RESUME</button>
+          <button class="secondary-btn" data-action="restart">RESTART</button>
+        </section>
+
+        <!-- Level complete -->
+        <section id="screen-level" class="screen">
+          <h2 class="title small">LEVEL CLEARED!</h2>
+          <p class="subtitle" id="levelMsg">Get ready for the next level…</p>
+          <button class="primary-btn" data-action="next">CONTINUE</button>
+        </section>
+
+        <!-- Game over -->
+        <section id="screen-over" class="screen">
+          <h2 class="title small danger">GAME OVER</h2>
+          <p class="subtitle">Final Score: <span id="finalScore">0</span></p>
+          <p class="subtitle" id="newHigh" style="display:none;color:#ffe600">★ New High Score! ★</p>
+          <button class="primary-btn" data-action="start">PLAY AGAIN</button>
+        </section>
+      </div>
+    </main>
+
+    <!-- Mobile D-pad -->
+    <div id="touch-controls">
+      <button class="dpad up"    data-dir="up">▲</button>
+      <button class="dpad left"  data-dir="left">◀</button>
+      <button class="dpad down"  data-dir="down">▼</button>
+      <button class="dpad right" data-dir="right">▶</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

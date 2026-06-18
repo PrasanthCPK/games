@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0a12" />
+<title>Road Fighter — Retro Arcade Racing</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="game-shell">
+  <!-- Main game canvas -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- HUD overlay -->
+  <div id="hud" class="hidden">
+    <div class="hud-top">
+      <div class="hud-block">
+        <span class="hud-label">SCORE</span>
+        <span id="hud-score" class="hud-value">0</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">BEST</span>
+        <span id="hud-best" class="hud-value">0</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">STAGE</span>
+        <span id="hud-stage" class="hud-value">1</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">DIST</span>
+        <span id="hud-dist" class="hud-value">0 m</span>
+      </div>
+      <div class="hud-block">
+        <span class="hud-label">TIME</span>
+        <span id="hud-time" class="hud-value">60</span>
+      </div>
+    </div>
+
+    <div class="hud-gauges">
+      <div class="gauge">
+        <span class="gauge-label">FUEL</span>
+        <div class="gauge-bar"><div id="fuel-fill" class="gauge-fill fuel"></div></div>
+      </div>
+      <div class="gauge">
+        <span class="gauge-label">SPEED</span>
+        <div class="gauge-bar"><div id="speed-fill" class="gauge-fill speed"></div></div>
+        <span id="speed-readout" class="gauge-readout">0 km/h</span>
+      </div>
+    </div>
+
+    <div class="hud-buttons">
+      <button id="btn-pause" class="icon-btn" aria-label="Pause">❚❚</button>
+      <button id="btn-mute" class="icon-btn" aria-label="Mute">♪</button>
+    </div>
+  </div>
+
+  <!-- Touch controls -->
+  <div id="touch-controls" class="hidden">
+    <div class="touch-cluster left">
+      <button id="t-left" class="touch-btn" aria-label="Steer left">◀</button>
+      <button id="t-right" class="touch-btn" aria-label="Steer right">▶</button>
+    </div>
+    <div class="touch-cluster right">
+      <button id="t-brake" class="touch-btn brake" aria-label="Brake">BRAKE</button>
+      <button id="t-accel" class="touch-btn accel" aria-label="Accelerate">GAS</button>
+    </div>
+  </div>
+
+  <!-- ============ SCREENS ============ -->
+
+  <!-- Start screen -->
+  <div id="screen-start" class="screen">
+    <div class="panel">
+      <h1 class="title">ROAD<span>FIGHTER</span></h1>
+      <p class="subtitle">Retro Arcade Racing</p>
+      <button id="btn-play" class="btn primary">▶ PLAY</button>
+      <div class="mode-select">
+        <span class="mode-label">MODE</span>
+        <div class="mode-options">
+          <button class="mode-opt active" data-mode="modern">MODERN</button>
+          <button class="mode-opt" data-mode="classic">CLASSIC</button>
+          <button class="mode-opt" data-mode="endless">ENDLESS</button>
+        </div>
+      </div>
+      <div class="controls-guide">
+        <h3>CONTROLS</h3>
+        <div class="ctrl-grid">
+          <span><b>← →</b> / <b>A D</b></span><span>Steer</span>
+          <span><b>↑</b> / <b>W</b></span><span>Accelerate</span>
+          <span><b>↓</b> / <b>S</b></span><span>Brake</span>
+          <span><b>P</b></span><span>Pause</span>
+          <span><b>M</b></span><span>Mute</span>
+        </div>
+        <p class="hint">Reach each checkpoint before your fuel runs out. Avoid traffic, grab fuel, drive fast!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pause screen -->
+  <div id="screen-pause" class="screen hidden">
+    <div class="panel">
+      <h2 class="panel-title">PAUSED</h2>
+      <button id="btn-resume" class="btn primary">RESUME</button>
+      <button id="btn-restart-pause" class="btn">RESTART</button>
+      <div class="settings">
+        <h3>SETTINGS</h3>
+        <label class="setting-row">
+          <span>Music Volume</span>
+          <input id="vol-music" type="range" min="0" max="100" value="40" />
+        </label>
+        <label class="setting-row">
+          <span>SFX Volume</span>
+          <input id="vol-sfx" type="range" min="0" max="100" value="70" />
+        </label>
+        <label class="setting-row checkbox">
+          <span>Tilt Steering (mobile)</span>
+          <input id="opt-tilt" type="checkbox" />
+        </label>
+      </div>
+      <button id="btn-quit" class="btn ghost">QUIT TO MENU</button>
+    </div>
+  </div>
+
+  <!-- Stage complete screen -->
+  <div id="screen-stage" class="screen hidden">
+    <div class="panel">
+      <h2 class="panel-title win">STAGE CLEAR!</h2>
+      <div class="stat-rows">
+        <div class="stat-row"><span>Distance</span><span id="stage-dist">0 m</span></div>
+        <div class="stat-row"><span>Stage Bonus</span><span id="stage-bonus">0</span></div>
+        <div class="stat-row"><span>Fuel Bonus</span><span id="stage-fuel-bonus">0</span></div>
+        <div class="stat-row total"><span>Total Score</span><span id="stage-total">0</span></div>
+      </div>
+      <button id="btn-next-stage" class="btn primary">NEXT STAGE ▶</button>
+    </div>
+  </div>
+
+  <!-- Game over screen -->
+  <div id="screen-over" class="screen hidden">
+    <div class="panel">
+      <h2 class="panel-title lose">GAME OVER</h2>
+      <p id="over-reason" class="over-reason">Out of fuel!</p>
+      <div class="stat-rows">
+        <div class="stat-row"><span>Final Score</span><span id="over-score">0</span></div>
+        <div class="stat-row"><span>Best Score</span><span id="over-best">0</span></div>
+        <div class="stat-row"><span>Distance</span><span id="over-dist">0 m</span></div>
+        <div class="stat-row"><span>Cars Passed</span><span id="over-passed">0</span></div>
+      </div>
+      <div id="over-newbest" class="new-best hidden">★ NEW BEST! ★</div>
+      <button id="btn-retry" class="btn primary">RETRY</button>
+      <button id="btn-menu" class="btn ghost">MAIN MENU</button>
+    </div>
+  </div>
+
+  <!-- Rotate device hint -->
+  <div id="rotate-hint" class="hidden">
+    <div class="rotate-icon">⟳</div>
+    <p>Rotate your device to landscape for the best experience</p>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#05060f" />
+  <title>NEON BREAKOUT</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <!-- ===================== HUD ===================== -->
+    <header id="hud" class="hud">
+      <div class="hud-group">
+        <div class="hud-item">
+          <span class="hud-label">SCORE</span>
+          <span id="score" class="hud-value">0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">HIGH</span>
+          <span id="highScore" class="hud-value">0</span>
+        </div>
+      </div>
+      <div class="hud-group hud-center">
+        <div class="hud-item">
+          <span class="hud-label">LEVEL</span>
+          <span id="level" class="hud-value">1</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">COMBO</span>
+          <span id="combo" class="hud-value">x1</span>
+        </div>
+      </div>
+      <div class="hud-group hud-right">
+        <div class="hud-item">
+          <span class="hud-label">LIVES</span>
+          <span id="lives" class="hud-value hud-lives">♥♥♥</span>
+        </div>
+        <div class="hud-buttons">
+          <button id="pauseBtn" class="icon-btn" title="Pause (P)" aria-label="Pause">❚❚</button>
+          <button id="muteBtn" class="icon-btn" title="Mute" aria-label="Mute">🔊</button>
+          <button id="restartBtn" class="icon-btn" title="Restart" aria-label="Restart">⟳</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===================== ACTIVE POWERUPS ===================== -->
+    <div id="powerups" class="powerup-tray" aria-live="polite"></div>
+
+    <!-- ===================== GAME CANVAS ===================== -->
+    <main class="stage">
+      <canvas id="game" class="game-canvas"></canvas>
+      <div id="crtOverlay" class="crt-overlay" aria-hidden="true"></div>
+
+      <!-- ===================== MOBILE VIRTUAL CONTROLS ===================== -->
+      <div id="touchControls" class="touch-controls" aria-hidden="true">
+        <button id="touchLeft" class="touch-btn">◀</button>
+        <button id="touchLaunch" class="touch-btn touch-launch">▲</button>
+        <button id="touchRight" class="touch-btn">▶</button>
+      </div>
+
+      <!-- ===================== START SCREEN ===================== -->
+      <section id="startScreen" class="screen screen--visible">
+        <div class="panel">
+          <h1 class="title">NEON<span>BREAKOUT</span></h1>
+          <p class="subtitle">Smash every brick. Survive every level.</p>
+          <button id="playBtn" class="btn btn--primary">PLAY</button>
+          <div class="controls-guide">
+            <h3>CONTROLS</h3>
+            <ul>
+              <li><kbd>←</kbd> <kbd>→</kbd> / <kbd>A</kbd> <kbd>D</kbd> — Move paddle</li>
+              <li><kbd>Space</kbd> — Launch ball / fire laser</li>
+              <li><kbd>P</kbd> — Pause &nbsp;·&nbsp; <kbd>M</kbd> — Mute</li>
+              <li>Touch &amp; drag to move on mobile</li>
+            </ul>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="crtToggle" checked />
+            <span>CRT Filter</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- ===================== PAUSE SCREEN ===================== -->
+      <section id="pauseScreen" class="screen">
+        <div class="panel">
+          <h2 class="panel-title">PAUSED</h2>
+          <button id="resumeBtn" class="btn btn--primary">RESUME</button>
+          <button id="pauseRestartBtn" class="btn">RESTART</button>
+          <div class="settings">
+            <label class="slider-row">
+              <span>Volume</span>
+              <input type="range" id="volumeSlider" min="0" max="100" value="60" />
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="crtTogglePause" checked />
+              <span>CRT Filter</span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="shakeToggle" checked />
+              <span>Screen Shake</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== LEVEL COMPLETE SCREEN ===================== -->
+      <section id="levelScreen" class="screen">
+        <div class="panel">
+          <h2 class="panel-title">LEVEL CLEAR</h2>
+          <div class="stat-line"><span>Level Score</span><span id="levelScoreVal">0</span></div>
+          <div class="stat-line"><span>Lives Bonus</span><span id="livesBonusVal">0</span></div>
+          <div class="stat-line stat-total"><span>Total</span><span id="levelTotalVal">0</span></div>
+          <button id="nextLevelBtn" class="btn btn--primary">NEXT LEVEL</button>
+        </div>
+      </section>
+
+      <!-- ===================== GAME OVER SCREEN ===================== -->
+      <section id="overScreen" class="screen">
+        <div class="panel">
+          <h2 class="panel-title panel-title--danger">GAME OVER</h2>
+          <div class="stat-line"><span>Final Score</span><span id="finalScoreVal">0</span></div>
+          <div class="stat-line"><span>High Score</span><span id="finalHighVal">0</span></div>
+          <div id="newRecord" class="new-record hidden">★ NEW RECORD ★</div>
+          <button id="playAgainBtn" class="btn btn--primary">PLAY AGAIN</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
