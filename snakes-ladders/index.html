@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1a1530" />
+  <title>Snakes &amp; Ladders</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>" />
+</head>
+<body data-theme="classic">
+
+  <!-- ===================== MAIN MENU ===================== -->
+  <section id="menu-screen" class="screen active">
+    <div class="menu-card">
+      <h1 class="game-title">🐍 Snakes &amp; Ladders 🪜</h1>
+      <p class="subtitle">The timeless climb-and-slide classic, reimagined.</p>
+
+      <div class="menu-group">
+        <label class="menu-label">Game Mode</label>
+        <div class="seg" id="mode-seg">
+          <button class="seg-btn active" data-mode="single">Single Player</button>
+          <button class="seg-btn" data-mode="local">Local Multiplayer</button>
+          <button class="seg-btn" data-mode="custom">Custom Match</button>
+        </div>
+      </div>
+
+      <!-- Single player options -->
+      <div class="menu-group mode-panel" data-panel="single">
+        <label class="menu-label">AI Difficulty</label>
+        <div class="seg" id="difficulty-seg">
+          <button class="seg-btn" data-diff="easy">Easy</button>
+          <button class="seg-btn active" data-diff="medium">Medium</button>
+          <button class="seg-btn" data-diff="hard">Hard</button>
+        </div>
+        <label class="menu-label">Number of AI Opponents</label>
+        <div class="seg" id="ai-count-seg">
+          <button class="seg-btn active" data-ai="1">1</button>
+          <button class="seg-btn" data-ai="2">2</button>
+          <button class="seg-btn" data-ai="3">3</button>
+        </div>
+      </div>
+
+      <!-- Local multiplayer options -->
+      <div class="menu-group mode-panel" data-panel="local" hidden>
+        <label class="menu-label">Number of Players</label>
+        <div class="seg" id="local-count-seg">
+          <button class="seg-btn active" data-players="2">2</button>
+          <button class="seg-btn" data-players="3">3</button>
+          <button class="seg-btn" data-players="4">4</button>
+        </div>
+      </div>
+
+      <!-- Custom match options -->
+      <div class="menu-group mode-panel" data-panel="custom" hidden>
+        <label class="menu-label">Configure Players (2–4)</label>
+        <div id="custom-players" class="custom-players"></div>
+        <div class="custom-actions">
+          <button class="mini-btn" id="custom-remove">– Remove</button>
+          <button class="mini-btn" id="custom-add">+ Add Player</button>
+        </div>
+        <label class="menu-label">AI Difficulty</label>
+        <div class="seg" id="custom-diff-seg">
+          <button class="seg-btn" data-diff="easy">Easy</button>
+          <button class="seg-btn active" data-diff="medium">Medium</button>
+          <button class="seg-btn" data-diff="hard">Hard</button>
+        </div>
+      </div>
+
+      <div class="menu-group">
+        <label class="menu-label">Theme</label>
+        <div class="theme-grid" id="theme-grid">
+          <button class="theme-btn active" data-theme="classic"><span>🎲</span>Classic</button>
+          <button class="theme-btn" data-theme="jungle"><span>🌿</span>Jungle</button>
+          <button class="theme-btn" data-theme="fantasy"><span>🧙</span>Fantasy</button>
+          <button class="theme-btn" data-theme="pirate"><span>🏴‍☠️</span>Pirate</button>
+          <button class="theme-btn" data-theme="space"><span>🚀</span>Space</button>
+        </div>
+      </div>
+
+      <div class="menu-buttons">
+        <button class="btn primary big" id="play-btn">▶ Play</button>
+        <button class="btn" id="rules-btn">📖 Rules</button>
+        <button class="btn" id="stats-btn">📊 Statistics</button>
+      </div>
+    </div>
+    <p class="footer-note">Runs 100% offline · No installs · Works on mobile &amp; desktop</p>
+  </section>
+
+  <!-- ===================== GAME SCREEN ===================== -->
+  <section id="game-screen" class="screen">
+    <header class="topbar">
+      <button class="icon-btn" id="back-btn" title="Back to menu">⬅</button>
+      <div class="turn-banner" id="turn-banner">Player 1's Turn</div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="pause-btn" title="Pause">⏸</button>
+        <button class="icon-btn" id="mute-btn" title="Mute">🔊</button>
+      </div>
+    </header>
+
+    <main class="game-layout">
+      <div class="board-wrap">
+        <canvas id="board-canvas"></canvas>
+        <div id="confetti-layer" class="confetti-layer"></div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="players-panel" id="players-panel"></div>
+
+        <div class="dice-zone">
+          <div class="dice" id="dice"><div class="dice-face" id="dice-face"></div></div>
+          <button class="btn primary big roll-btn" id="roll-btn">🎲 Roll Dice</button>
+          <div class="dice-result" id="dice-result">Press roll to begin</div>
+        </div>
+
+        <div class="history-panel">
+          <div class="history-head">Move History</div>
+          <ul class="history-list" id="history-list"></ul>
+        </div>
+
+        <div class="game-controls">
+          <button class="btn small" id="restart-btn">↻ Restart</button>
+          <button class="btn small" id="newgame-btn">＋ New Game</button>
+        </div>
+      </aside>
+    </main>
+  </section>
+
+  <!-- ===================== VICTORY SCREEN ===================== -->
+  <section id="victory-screen" class="screen">
+    <div id="victory-confetti" class="confetti-layer"></div>
+    <div class="victory-card">
+      <div class="trophy">🏆</div>
+      <h2 id="winner-title">Player 1 Wins!</h2>
+      <div class="rankings" id="rankings"></div>
+      <div class="victory-stats" id="victory-stats"></div>
+      <div class="menu-buttons">
+        <button class="btn primary big" id="playagain-btn">🔁 Play Again</button>
+        <button class="btn" id="tomenu-btn">🏠 Main Menu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MODALS ===================== -->
+  <div class="modal-overlay" id="modal-overlay" hidden>
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modal-close">✕</button>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Pause overlay -->
+  <div class="pause-overlay" id="pause-overlay" hidden>
+    <div class="pause-card">
+      <h2>⏸ Paused</h2>
+      <button class="btn primary big" id="resume-btn">▶ Resume</button>
+      <button class="btn" id="pause-restart-btn">↻ Restart</button>
+      <button class="btn" id="pause-menu-btn">🏠 Main Menu</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

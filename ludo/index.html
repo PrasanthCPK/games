@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#1b1f3b" />
+<title>Ludo — Classic Board Game</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body data-theme="classic">
+
+<!-- ========================= MAIN MENU ========================= -->
+<section id="screen-menu" class="screen active">
+  <div class="menu-card">
+    <h1 class="title">L<span class="d r"></span>D<span class="d g"></span></h1>
+    <p class="subtitle">The classic board game · play vs friends or AI</p>
+
+    <div class="presets">
+      <button class="preset-btn" data-preset="single">🤖 Single Player</button>
+      <button class="preset-btn" data-preset="local">👥 Local Multiplayer</button>
+      <button class="preset-btn" data-preset="custom">⚙️ Custom Game</button>
+    </div>
+
+    <div class="config" id="player-config">
+      <h2>Players</h2>
+      <div class="config-rows">
+        <div class="config-row" data-color="red">
+          <span class="dot red"></span><span class="cname">Red</span>
+          <select class="ptype">
+            <option value="human">Human</option>
+            <option value="ai-easy">AI · Easy</option>
+            <option value="ai-medium">AI · Medium</option>
+            <option value="ai-hard">AI · Hard</option>
+          </select>
+          <input class="pname" type="text" maxlength="10" placeholder="Name" value="Red" />
+        </div>
+        <div class="config-row" data-color="green">
+          <span class="dot green"></span><span class="cname">Green</span>
+          <select class="ptype">
+            <option value="off">— Off —</option>
+            <option value="human">Human</option>
+            <option value="ai-easy">AI · Easy</option>
+            <option value="ai-medium" selected>AI · Medium</option>
+            <option value="ai-hard">AI · Hard</option>
+          </select>
+          <input class="pname" type="text" maxlength="10" placeholder="Name" value="Green" />
+        </div>
+        <div class="config-row" data-color="yellow">
+          <span class="dot yellow"></span><span class="cname">Yellow</span>
+          <select class="ptype">
+            <option value="off">— Off —</option>
+            <option value="human">Human</option>
+            <option value="ai-easy">AI · Easy</option>
+            <option value="ai-medium" selected>AI · Medium</option>
+            <option value="ai-hard">AI · Hard</option>
+          </select>
+          <input class="pname" type="text" maxlength="10" placeholder="Name" value="Yellow" />
+        </div>
+        <div class="config-row" data-color="blue">
+          <span class="dot blue"></span><span class="cname">Blue</span>
+          <select class="ptype">
+            <option value="off">— Off —</option>
+            <option value="human">Human</option>
+            <option value="ai-easy">AI · Easy</option>
+            <option value="ai-medium" selected>AI · Medium</option>
+            <option value="ai-hard">AI · Hard</option>
+          </select>
+          <input class="pname" type="text" maxlength="10" placeholder="Name" value="Blue" />
+        </div>
+      </div>
+      <p class="hint">Turn order is Red → Green → Yellow → Blue. At least 2 players required.</p>
+    </div>
+
+    <div class="menu-actions">
+      <button id="start-game" class="primary big">▶ Play</button>
+      <button id="open-settings" class="ghost">Settings</button>
+      <button id="open-stats" class="ghost">Stats</button>
+    </div>
+  </div>
+  <footer class="credit">Pure HTML · CSS · JavaScript — no backend, no build tools.</footer>
+</section>
+
+<!-- ========================= GAME SCREEN ========================= -->
+<section id="screen-game" class="screen">
+  <header class="topbar">
+    <button id="btn-menu" class="ghost sm">☰ Menu</button>
+    <div id="turn-banner" class="turn-banner">Red's turn</div>
+    <div class="topbar-right">
+      <button id="btn-pause" class="ghost sm">⏸</button>
+      <button id="btn-restart" class="ghost sm">⟳</button>
+      <button id="btn-sound" class="ghost sm">🔊</button>
+    </div>
+  </header>
+
+  <main class="play-area">
+    <aside class="panel panel-left" id="panel-left"></aside>
+
+    <div class="board-wrap">
+      <div id="board" class="board"></div>
+    </div>
+
+    <aside class="panel panel-right">
+      <div class="dice-zone">
+        <div id="dice" class="dice" aria-label="dice">
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+          <span class="pip"></span><span class="pip"></span><span class="pip"></span>
+        </div>
+        <button id="btn-roll" class="primary big roll-btn">🎲 Roll</button>
+        <div id="dice-msg" class="dice-msg"></div>
+      </div>
+    </aside>
+  </main>
+
+  <div id="toast" class="toast"></div>
+</section>
+
+<!-- ========================= VICTORY SCREEN ========================= -->
+<section id="screen-victory" class="screen">
+  <div class="victory-card">
+    <div class="confetti" id="confetti"></div>
+    <h1 id="victory-title">🏆 Winner!</h1>
+    <div id="rankings" class="rankings"></div>
+    <div class="menu-actions">
+      <button id="play-again" class="primary big">↻ Play Again</button>
+      <button id="back-to-menu" class="ghost">Main Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= SETTINGS MODAL ========================= -->
+<div id="modal-settings" class="modal">
+  <div class="modal-card">
+    <h2>Settings</h2>
+    <label class="setting-row">
+      <span>Theme</span>
+      <select id="theme-select">
+        <option value="classic">Classic</option>
+        <option value="wooden">Wooden</option>
+        <option value="royal">Royal</option>
+        <option value="neon">Neon</option>
+        <option value="space">Space</option>
+      </select>
+    </label>
+    <label class="setting-row">
+      <span>Sound</span>
+      <input type="checkbox" id="sound-toggle" checked />
+    </label>
+    <label class="setting-row">
+      <span>Volume</span>
+      <input type="range" id="volume-range" min="0" max="100" value="60" />
+    </label>
+    <label class="setting-row">
+      <span>Animation speed</span>
+      <select id="speed-select">
+        <option value="220">Relaxed</option>
+        <option value="150" selected>Normal</option>
+        <option value="90">Fast</option>
+      </select>
+    </label>
+    <button class="primary" data-close-modal>Done</button>
+  </div>
+</div>
+
+<!-- ========================= STATS MODAL ========================= -->
+<div id="modal-stats" class="modal">
+  <div class="modal-card">
+    <h2>Statistics</h2>
+    <div id="stats-body" class="stats-body"></div>
+    <h3>Achievements</h3>
+    <div id="achievements-body" class="ach-body"></div>
+    <div class="modal-actions">
+      <button class="ghost" id="reset-stats">Reset</button>
+      <button class="primary" data-close-modal>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= PAUSE MODAL ========================= -->
+<div id="modal-pause" class="modal">
+  <div class="modal-card">
+    <h2>Paused</h2>
+    <div class="menu-actions">
+      <button class="primary big" id="resume-game">▶ Resume</button>
+      <button class="ghost" id="pause-restart">⟳ Restart</button>
+      <button class="ghost" id="pause-menu">☰ Main Menu</button>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
