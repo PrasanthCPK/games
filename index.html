@@ -37,9 +37,36 @@
       </div>
       <p class="game-count" id="game-count" aria-live="polite"></p>
     </div>
+
+    <div class="controls controls--secondary">
+      <div class="sort-wrap">
+        <label class="visually-hidden" for="sort">Sort games</label>
+        <select id="sort" class="sort-select" aria-controls="games-grid">
+          <option value="default">Featured order</option>
+          <option value="az">A–Z</option>
+          <option value="recent">Recently Added</option>
+          <option value="category">Category</option>
+        </select>
+      </div>
+      <button
+        id="crt-toggle"
+        class="crt-toggle"
+        type="button"
+        aria-pressed="false"
+      >
+        CRT Glow
+      </button>
+    </div>
   </header>
 
   <main>
+    <!-- Featured Classics — 3 random games chosen on each page load,
+         generated dynamically from the same `games` data source. -->
+    <section class="featured" aria-labelledby="featured-title">
+      <h2 class="section-title section-title--featured" id="featured-title">Featured&nbsp;Classics</h2>
+      <ul class="featured-grid" id="featured-grid" aria-label="Featured games"></ul>
+    </section>
+
     <!-- Tiles are generated dynamically from the `games` array in script.js -->
     <ul class="games-grid" id="games-grid" aria-label="Available games"></ul>
 

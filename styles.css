@@ -159,6 +159,58 @@ body {
   white-space: nowrap;
 }
 
+/* ---------- Secondary controls (sort + CRT toggle) ---------- */
+.controls--secondary {
+  margin-top: 1rem;
+}
+
+.sort-select {
+  padding: 0.6rem 2.2rem 0.6rem 1rem;
+  font-size: 0.95rem;
+  color: var(--text);
+  background-color: var(--bg-elev);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2300f0ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  background-size: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.sort-select:focus {
+  outline: none;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.18);
+}
+
+.crt-toggle {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition),
+    box-shadow var(--transition), background var(--transition);
+}
+.crt-toggle:hover {
+  color: var(--text);
+  border-color: var(--neon-cyan);
+}
+.crt-toggle[aria-pressed="true"] {
+  color: #001417;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+  border-color: transparent;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+}
+
 /* ---------- Games grid ---------- */
 .games-grid {
   list-style: none;
@@ -168,6 +220,56 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+/* ---------- Card list item (positioning + entrance) ---------- */
+.game-card-item {
+  position: relative;
+  animation: card-entrance 420ms var(--transition) both;
+  animation-delay: var(--entrance-delay, 0ms);
+}
+
+@keyframes card-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Favorite toggle ---------- */
+.fav-button {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 2;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text-muted);
+  background: rgba(10, 10, 18, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+  transition: color var(--transition), transform var(--transition),
+    border-color var(--transition), box-shadow var(--transition);
+}
+.fav-button:hover {
+  transform: scale(1.12);
+  border-color: var(--neon-pink);
+}
+.fav-button.is-favorite {
+  color: #ffd23f;
+  border-color: rgba(255, 210, 63, 0.5);
+  box-shadow: 0 0 14px rgba(255, 210, 63, 0.35);
 }
 
 /* ---------- Game card ---------- */
@@ -361,6 +463,78 @@ body {
   background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
+}
+
+/* ---------- Featured Classics ---------- */
+.featured {
+  max-width: var(--maxw);
+  margin: 0 auto 3rem;
+}
+
+.section-title--featured {
+  background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.featured-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.game-card--featured {
+  border-color: rgba(157, 77, 255, 0.4);
+}
+.game-card--featured .game-icon-wrap {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 46, 136, 0.22), transparent 70%),
+    var(--bg-elev);
+}
+
+/* ---------- Retro CRT glow effect ---------- */
+.crt {
+  position: relative;
+}
+.crt::before {
+  /* Scanlines */
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+}
+.crt::after {
+  /* Screen vignette + phosphor glow */
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 120% at 50% 50%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  mix-blend-mode: multiply;
+}
+.crt .site-title,
+.crt .game-name {
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.55), 0 0 14px rgba(255, 46, 136, 0.35);
+}
+.crt .game-icon {
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.45));
 }
 
 /* ---------- Footer ---------- */

@@ -36,7 +36,8 @@ const games = [
       </svg>`),
     description: "Classic Nokia-inspired bouncing ball adventure.",
     url: "/games/bounce",
-    tags: ["Arcade"],
+    slug: "bounce",
+    tags: ["Arcade", "Classic"],
   },
   {
     name: "Snake",
@@ -58,7 +59,8 @@ const games = [
       </svg>`),
     description: "Eat food, grow longer, and avoid collisions.",
     url: "/games/snake",
-    tags: ["Arcade"],
+    slug: "snake",
+    tags: ["Arcade", "Classic"],
   },
   {
     name: "Flappy Bird",
@@ -82,6 +84,7 @@ const games = [
       </svg>`),
     description: "Tap to fly and dodge obstacles.",
     url: "/games/flappy-bird",
+    slug: "flappy-bird",
     tags: ["Arcade"],
   },
   {
@@ -111,6 +114,7 @@ const games = [
     description:
       "Jump through hoops, ride animals, and survive the circus challenges.",
     url: "/games/circus-charlie",
+    slug: "circus-charlie",
     tags: ["Arcade", "Classic"],
   },
   {
@@ -138,6 +142,7 @@ const games = [
       </svg>`),
     description: "Clear the board using logic without triggering hidden mines.",
     url: "/games/minesweeper",
+    slug: "minesweeper",
     tags: ["Puzzle", "Strategy"],
   },
   {
@@ -159,6 +164,7 @@ const games = [
       </svg>`),
     description: "The legendary table-tennis arcade game that started it all.",
     url: "/games/pong",
+    slug: "pong",
     tags: ["Arcade", "Sports"],
   },
   {
@@ -186,6 +192,7 @@ const games = [
     description:
       "Navigate traps, perform acrobatic jumps, and rescue the princess.",
     url: "/games/prince-of-persia",
+    slug: "prince-of-persia",
     tags: ["Adventure", "Platformer"],
   },
   {
@@ -212,7 +219,150 @@ const games = [
     description:
       "Arrange falling blocks to complete lines and achieve high scores.",
     url: "/games/tetris",
+    slug: "tetris",
     tags: ["Puzzle", "Classic"],
+  },
+  {
+    name: "Road Fighter",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <rect x="18" y="0" width="60" height="96" fill="#2a2a40"/>
+        <g fill="#ffd23f">
+          <rect x="46" y="6" width="4" height="14"/>
+          <rect x="46" y="30" width="4" height="14"/>
+          <rect x="46" y="54" width="4" height="14"/>
+          <rect x="46" y="78" width="4" height="14"/>
+        </g>
+        <rect x="34" y="30" width="28" height="46" rx="9" fill="#ff2e2e"/>
+        <rect x="38" y="38" width="20" height="12" rx="3" fill="#00f0ff"/>
+        <rect x="38" y="56" width="20" height="10" rx="3" fill="#11111a"/>
+        <g fill="#11111a">
+          <rect x="29" y="36" width="6" height="13" rx="2"/>
+          <rect x="61" y="36" width="6" height="13" rx="2"/>
+          <rect x="29" y="60" width="6" height="13" rx="2"/>
+          <rect x="61" y="60" width="6" height="13" rx="2"/>
+        </g>
+      </svg>`),
+    description:
+      "Race against time, dodge traffic, collect fuel, and reach the next checkpoint.",
+    url: "/games/road-fighter",
+    slug: "road-fighter",
+    tags: ["Racing", "Arcade", "Classic"],
+  },
+  {
+    name: "Pac-Man",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <path d="M48 48 L86 30 A42 42 0 1 0 86 66 Z" fill="#ffd23f"/>
+        <circle cx="60" cy="30" r="5" fill="#11111a"/>
+        <g fill="#fff">
+          <circle cx="20" cy="48" r="4"/>
+          <circle cx="6" cy="48" r="4"/>
+        </g>
+      </svg>`),
+    description: "Navigate mazes, eat pellets, and avoid colorful ghosts.",
+    url: "/games/pacman",
+    slug: "pacman",
+    tags: ["Arcade", "Maze", "Classic"],
+  },
+  {
+    name: "Breakout",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" shape-rendering="crispEdges">
+        <g>
+          <rect x="14" y="14" width="20" height="10" fill="#ff2e88"/>
+          <rect x="38" y="14" width="20" height="10" fill="#ffd23f"/>
+          <rect x="62" y="14" width="20" height="10" fill="#00f0ff"/>
+          <rect x="14" y="26" width="20" height="10" fill="#9d4dff"/>
+          <rect x="38" y="26" width="20" height="10" fill="#39ff14"/>
+          <rect x="62" y="26" width="20" height="10" fill="#ff2e88"/>
+        </g>
+        <circle cx="48" cy="60" r="6" fill="#f3f3fb"/>
+        <rect x="34" y="78" width="28" height="8" rx="3" fill="#00f0ff"/>
+      </svg>`),
+    description: "Break every brick using precise paddle control and ball rebounds.",
+    url: "/games/breakout",
+    slug: "breakout",
+    tags: ["Arcade", "Skill", "Classic"],
+  },
+  {
+    name: "Space Invaders",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" shape-rendering="crispEdges">
+        <g fill="#39ff14">
+          <rect x="36" y="20" width="24" height="8"/>
+          <rect x="28" y="28" width="40" height="8"/>
+          <rect x="20" y="36" width="56" height="16"/>
+          <rect x="28" y="52" width="8" height="8"/>
+          <rect x="60" y="52" width="8" height="8"/>
+        </g>
+        <rect x="32" y="36" width="8" height="8" fill="#11111a"/>
+        <rect x="56" y="36" width="8" height="8" fill="#11111a"/>
+      </svg>`),
+    description:
+      "Defend Earth by eliminating waves of descending alien attackers.",
+    url: "/games/space-invaders",
+    slug: "space-invaders",
+    tags: ["Arcade", "Shooter", "Classic"],
+  },
+  {
+    name: "Pinball",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <defs>
+          <radialGradient id="steel" cx="38%" cy="34%" r="70%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="45%" stop-color="#c8c8d8"/>
+            <stop offset="100%" stop-color="#6a6a80"/>
+          </radialGradient>
+        </defs>
+        <circle cx="48" cy="36" r="18" fill="url(#steel)"/>
+        <circle cx="41" cy="29" r="5" fill="#fff" opacity="0.7"/>
+        <path d="M22 62 L48 78 L48 70 L28 56 Z" fill="#00f0ff"/>
+        <path d="M74 62 L48 78 L48 70 L68 56 Z" fill="#ff2e88"/>
+      </svg>`),
+    description:
+      "Keep the ball in play, hit targets, and achieve the highest score possible.",
+    url: "/games/pinball",
+    slug: "pinball",
+    tags: ["Arcade", "Skill"],
+  },
+  {
+    name: "Space Impact",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" shape-rendering="crispEdges">
+        <g fill="#00f0ff">
+          <rect x="18" y="40" width="14" height="16"/>
+          <rect x="32" y="34" width="14" height="28"/>
+          <rect x="46" y="42" width="14" height="12"/>
+          <polygon points="60,42 78,48 60,54"/>
+        </g>
+        <g fill="#39ff14">
+          <rect x="18" y="30" width="10" height="4"/>
+          <rect x="12" y="62" width="10" height="4"/>
+        </g>
+        <g fill="#ff2e88">
+          <rect x="78" y="46" width="8" height="4"/>
+          <rect x="90" y="46" width="6" height="4"/>
+        </g>
+      </svg>`),
+    description:
+      "Fly through enemy territory, destroy hostile ships, and survive intense battles.",
+    url: "/games/space-impact",
+    slug: "space-impact",
+    tags: ["Shooter", "Retro", "Classic"],
   },
 
   /* ---------------------------------------------------------
@@ -236,57 +386,9 @@ const games = [
    Add a new upcoming title by appending an object here.
    --------------------------------------------------------- */
 const comingSoon = [
-  {
-    name: "Pac-Man",
-    icon:
-      "data:image/svg+xml," +
-      encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
-        <path d="M48 48 L86 30 A42 42 0 1 0 86 66 Z" fill="#ffd23f"/>
-        <circle cx="60" cy="30" r="5" fill="#11111a"/>
-      </svg>`),
-    description: "Munch dots and dodge ghosts through the maze.",
-    tags: ["Arcade", "Classic"],
-  },
-  {
-    name: "Space Invaders",
-    icon:
-      "data:image/svg+xml," +
-      encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" shape-rendering="crispEdges">
-        <g fill="#39ff14">
-          <rect x="36" y="20" width="24" height="8"/>
-          <rect x="28" y="28" width="40" height="8"/>
-          <rect x="20" y="36" width="56" height="16"/>
-          <rect x="28" y="52" width="8" height="8"/>
-          <rect x="60" y="52" width="8" height="8"/>
-        </g>
-        <rect x="32" y="36" width="8" height="8" fill="#11111a"/>
-        <rect x="56" y="36" width="8" height="8" fill="#11111a"/>
-      </svg>`),
-    description: "Blast waves of descending alien invaders.",
-    tags: ["Arcade", "Shooter"],
-  },
-  {
-    name: "Breakout",
-    icon:
-      "data:image/svg+xml," +
-      encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" shape-rendering="crispEdges">
-        <g>
-          <rect x="14" y="14" width="20" height="10" fill="#ff2e88"/>
-          <rect x="38" y="14" width="20" height="10" fill="#ffd23f"/>
-          <rect x="62" y="14" width="20" height="10" fill="#00f0ff"/>
-          <rect x="14" y="26" width="20" height="10" fill="#9d4dff"/>
-          <rect x="38" y="26" width="20" height="10" fill="#39ff14"/>
-          <rect x="62" y="26" width="20" height="10" fill="#ff2e88"/>
-        </g>
-        <circle cx="48" cy="60" r="6" fill="#f3f3fb"/>
-        <rect x="34" y="78" width="28" height="8" rx="3" fill="#00f0ff"/>
-      </svg>`),
-    description: "Smash every brick with a bouncing ball and paddle.",
-    tags: ["Arcade", "Classic"],
-  },
+  // Nothing in the pipeline right now — append upcoming titles here and the
+  // "Coming Soon" section reveals itself automatically. While empty, the
+  // section stays hidden (see renderComingSoon below).
 ];
 
 /* ---------------------------------------------------------
@@ -297,12 +399,93 @@ const searchInput = document.getElementById("search");
 const countEl = document.getElementById("game-count");
 const emptyState = document.getElementById("empty-state");
 const comingSoonGrid = document.getElementById("coming-soon-grid");
+const featuredGrid = document.getElementById("featured-grid");
+const sortSelect = document.getElementById("sort");
+const crtToggle = document.getElementById("crt-toggle");
+
+/* ---------------------------------------------------------
+   Stable per-game key (slug, falling back to the name).
+   Used for the localStorage-backed favorites system.
+   --------------------------------------------------------- */
+function gameKey(game) {
+  return game.slug || game.name;
+}
+
+/* ---------------------------------------------------------
+   Favorites — persisted in localStorage as a list of keys.
+   --------------------------------------------------------- */
+const FAV_STORAGE_KEY = "retro-games-hub:favorites";
+
+function loadFavorites() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(FAV_STORAGE_KEY));
+    return new Set(Array.isArray(parsed) ? parsed : []);
+  } catch {
+    return new Set();
+  }
+}
+
+const favorites = loadFavorites();
+
+function saveFavorites() {
+  try {
+    localStorage.setItem(FAV_STORAGE_KEY, JSON.stringify([...favorites]));
+  } catch {
+    /* storage unavailable (e.g. private mode) — favorites stay in-memory */
+  }
+}
+
+function isFavorite(game) {
+  return favorites.has(gameKey(game));
+}
+
+function toggleFavorite(game) {
+  const key = gameKey(game);
+  if (favorites.has(key)) favorites.delete(key);
+  else favorites.add(key);
+  saveFavorites();
+}
+
+/* ---------------------------------------------------------
+   Shared icon builder so every game tile renders an
+   identically-styled, responsively-scaled SVG icon.
+   --------------------------------------------------------- */
+function createIcon(game) {
+  const img = document.createElement("img");
+  img.className = "game-icon";
+  img.src = game.icon;
+  img.alt = `${game.name} icon`;
+  img.loading = "lazy";
+  img.decoding = "async";
+  img.width = 96;
+  img.height = 96;
+  return img;
+}
+
+/* ---------------------------------------------------------
+   Build a tag list element from a game's tags.
+   --------------------------------------------------------- */
+function createTagList(game) {
+  if (!Array.isArray(game.tags) || !game.tags.length) return null;
+  const tagList = document.createElement("ul");
+  tagList.className = "game-tags";
+  game.tags.forEach((tag) => {
+    const tagItem = document.createElement("li");
+    tagItem.className = "game-tag";
+    tagItem.textContent = tag;
+    tagList.appendChild(tagItem);
+  });
+  return tagList;
+}
 
 /* ---------------------------------------------------------
    Build a single game card (semantic <li><a>…)
    --------------------------------------------------------- */
-function createCard(game) {
+function createCard(game, index = 0) {
   const li = document.createElement("li");
+  li.className = "game-card-item";
+  // Staggered entrance animation (capped so long lists don't lag).
+  li.style.setProperty("--entrance-delay", `${Math.min(index, 16) * 45}ms`);
 
   const card = document.createElement("a");
   card.className = "game-card";
@@ -314,19 +497,9 @@ function createCard(game) {
     `Play ${game.name} — ${game.description} (opens in a new tab)`
   );
 
-  // Icon
   const iconWrap = document.createElement("div");
   iconWrap.className = "game-icon-wrap";
-
-  const img = document.createElement("img");
-  img.className = "game-icon";
-  img.src = game.icon;
-  img.alt = `${game.name} icon`;
-  img.loading = "lazy";
-  img.decoding = "async";
-  img.width = 96;
-  img.height = 96;
-  iconWrap.appendChild(img);
+  iconWrap.appendChild(createIcon(game));
 
   // Body
   const body = document.createElement("div");
@@ -337,17 +510,8 @@ function createCard(game) {
   name.textContent = game.name;
   body.appendChild(name);
 
-  if (Array.isArray(game.tags) && game.tags.length) {
-    const tagList = document.createElement("ul");
-    tagList.className = "game-tags";
-    game.tags.forEach((tag) => {
-      const tagItem = document.createElement("li");
-      tagItem.className = "game-tag";
-      tagItem.textContent = tag;
-      tagList.appendChild(tagItem);
-    });
-    body.appendChild(tagList);
-  }
+  const tagList = createTagList(game);
+  if (tagList) body.appendChild(tagList);
 
   const desc = document.createElement("p");
   desc.className = "game-description";
@@ -360,7 +524,27 @@ function createCard(game) {
   body.appendChild(play);
 
   card.append(iconWrap, body);
-  li.appendChild(card);
+
+  // Favorite toggle — sibling of the <a> (a button can't live inside a link).
+  const favBtn = document.createElement("button");
+  favBtn.type = "button";
+  favBtn.className = "fav-button";
+  const favActive = isFavorite(game);
+  favBtn.classList.toggle("is-favorite", favActive);
+  favBtn.setAttribute("aria-pressed", String(favActive));
+  favBtn.setAttribute(
+    "aria-label",
+    favActive ? `Remove ${game.name} from favorites` : `Add ${game.name} to favorites`
+  );
+  favBtn.textContent = favActive ? "★" : "☆";
+  favBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleFavorite(game);
+    applyView();
+  });
+
+  li.append(card, favBtn);
   return li;
 }
 
@@ -429,7 +613,7 @@ function createComingSoonCard(game) {
 function render(list) {
   grid.innerHTML = "";
   const fragment = document.createDocumentFragment();
-  list.forEach((game) => fragment.appendChild(createCard(game)));
+  list.forEach((game, index) => fragment.appendChild(createCard(game, index)));
   grid.appendChild(fragment);
 
   emptyState.hidden = list.length !== 0;
@@ -437,7 +621,7 @@ function render(list) {
 }
 
 /* ---------------------------------------------------------
-   Game count display
+   Game count display (always derived from the array length)
    --------------------------------------------------------- */
 function updateCount(shown) {
   const total = games.length;
@@ -452,7 +636,7 @@ function updateCount(shown) {
    --------------------------------------------------------- */
 function filterGames(query) {
   const q = query.trim().toLowerCase();
-  if (!q) return games;
+  if (!q) return games.slice();
   return games.filter((game) => {
     const haystack = [game.name, game.description, ...(game.tags || [])]
       .join(" ")
@@ -461,24 +645,160 @@ function filterGames(query) {
   });
 }
 
-searchInput.addEventListener("input", (event) => {
-  render(filterGames(event.target.value));
-});
+/* ---------------------------------------------------------
+   Sorting. "default" keeps array order; "recent" treats the
+   end of the array as the most recently added.
+   --------------------------------------------------------- */
+function sortGames(list, mode) {
+  const sorted = list.slice();
+  switch (mode) {
+    case "az":
+      sorted.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "recent":
+      sorted.reverse();
+      break;
+    case "category":
+      sorted.sort((a, b) => {
+        const catA = (a.tags && a.tags[0]) || "";
+        const catB = (b.tags && b.tags[0]) || "";
+        return catA.localeCompare(catB) || a.name.localeCompare(b.name);
+      });
+      break;
+    default:
+      break; // keep curated array order
+  }
+  // Favorites always float to the top, preserving the chosen order otherwise.
+  return sorted.sort((a, b) => Number(isFavorite(b)) - Number(isFavorite(a)));
+}
 
 /* ---------------------------------------------------------
-   Render the coming soon grid (once, on load)
+   Apply the current search + sort and re-render the grid.
+   --------------------------------------------------------- */
+function applyView() {
+  const filtered = filterGames(searchInput.value);
+  render(sortGames(filtered, sortSelect ? sortSelect.value : "default"));
+}
+
+searchInput.addEventListener("input", applyView);
+if (sortSelect) sortSelect.addEventListener("change", applyView);
+
+/* ---------------------------------------------------------
+   Featured Classics — pick a few random games on each load,
+   sourced from the same `games` array (no separate data).
+   --------------------------------------------------------- */
+function pickRandom(list, count) {
+  const pool = list.slice();
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, count);
+}
+
+function createFeaturedCard(game, index = 0) {
+  const li = document.createElement("li");
+  li.className = "game-card-item";
+  li.style.setProperty("--entrance-delay", `${index * 60}ms`);
+
+  const card = document.createElement("a");
+  card.className = "game-card game-card--featured";
+  card.href = game.url;
+  card.target = "_blank";
+  card.rel = "noopener noreferrer";
+  card.setAttribute(
+    "aria-label",
+    `Play ${game.name} — ${game.description} (opens in a new tab)`
+  );
+
+  const iconWrap = document.createElement("div");
+  iconWrap.className = "game-icon-wrap";
+  iconWrap.appendChild(createIcon(game));
+
+  const body = document.createElement("div");
+  body.className = "game-body";
+
+  const name = document.createElement("h3");
+  name.className = "game-name";
+  name.textContent = game.name;
+  body.appendChild(name);
+
+  const desc = document.createElement("p");
+  desc.className = "game-description";
+  desc.textContent = game.description;
+  body.appendChild(desc);
+
+  const play = document.createElement("span");
+  play.className = "play-button";
+  play.textContent = "Play";
+  body.appendChild(play);
+
+  card.append(iconWrap, body);
+  li.appendChild(card);
+  return li;
+}
+
+function renderFeatured() {
+  if (!featuredGrid) return;
+  const fragment = document.createDocumentFragment();
+  pickRandom(games, Math.min(3, games.length)).forEach((game, index) =>
+    fragment.appendChild(createFeaturedCard(game, index))
+  );
+  featuredGrid.innerHTML = "";
+  featuredGrid.appendChild(fragment);
+}
+
+/* ---------------------------------------------------------
+   Render the coming soon grid (once, on load). The whole
+   section hides itself while the array is empty.
    --------------------------------------------------------- */
 function renderComingSoon() {
   if (!comingSoonGrid) return;
+  const section = comingSoonGrid.closest(".coming-soon");
+  if (!comingSoon.length) {
+    if (section) section.hidden = true;
+    return;
+  }
+  if (section) section.hidden = false;
   const fragment = document.createDocumentFragment();
   comingSoon.forEach((game) =>
     fragment.appendChild(createComingSoonCard(game))
   );
+  comingSoonGrid.innerHTML = "";
   comingSoonGrid.appendChild(fragment);
+}
+
+/* ---------------------------------------------------------
+   Retro CRT glow toggle — persisted in localStorage.
+   --------------------------------------------------------- */
+const CRT_STORAGE_KEY = "retro-games-hub:crt";
+
+function setCrt(enabled) {
+  document.body.classList.toggle("crt", enabled);
+  if (crtToggle) crtToggle.setAttribute("aria-pressed", String(enabled));
+  try {
+    localStorage.setItem(CRT_STORAGE_KEY, enabled ? "1" : "0");
+  } catch {
+    /* ignore storage errors */
+  }
+}
+
+if (crtToggle) {
+  let crtOn = false;
+  try {
+    crtOn = localStorage.getItem(CRT_STORAGE_KEY) === "1";
+  } catch {
+    crtOn = false;
+  }
+  setCrt(crtOn);
+  crtToggle.addEventListener("click", () => {
+    setCrt(!document.body.classList.contains("crt"));
+  });
 }
 
 /* ---------------------------------------------------------
    Initial render
    --------------------------------------------------------- */
-render(games);
+applyView();
+renderFeatured();
 renderComingSoon();
