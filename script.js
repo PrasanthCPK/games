@@ -364,6 +364,85 @@ const games = [
     slug: "space-impact",
     tags: ["Shooter", "Retro", "Classic"],
   },
+  {
+    name: "Snakes & Ladders",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <rect x="10" y="10" width="76" height="76" rx="6" fill="#fff5e1"/>
+        <g opacity="0.9">
+          <rect x="10" y="10" width="19" height="19" fill="#ffd23f"/>
+          <rect x="48" y="10" width="19" height="19" fill="#39ff14"/>
+          <rect x="29" y="29" width="19" height="19" fill="#00f0ff"/>
+          <rect x="67" y="29" width="19" height="19" fill="#ff7a1a"/>
+          <rect x="10" y="48" width="19" height="19" fill="#9d4dff"/>
+          <rect x="48" y="48" width="19" height="19" fill="#ffd23f"/>
+          <rect x="29" y="67" width="19" height="19" fill="#39ff14"/>
+          <rect x="67" y="67" width="19" height="19" fill="#00f0ff"/>
+        </g>
+        <rect x="10" y="10" width="76" height="76" rx="6" fill="none" stroke="#2a2a40" stroke-width="3"/>
+        <g stroke="#c81d4e" stroke-width="5" fill="none" stroke-linecap="round">
+          <line x1="28" y1="22" x2="44" y2="74"/>
+          <line x1="34" y1="22" x2="50" y2="74"/>
+        </g>
+        <g stroke="#c81d4e" stroke-width="3">
+          <line x1="29" y1="34" x2="37" y2="32"/>
+          <line x1="31" y1="46" x2="39" y2="44"/>
+          <line x1="33" y1="58" x2="41" y2="56"/>
+        </g>
+        <path d="M58 20 q16 4 8 18 q-10 12 4 20 q12 6 4 18"
+              fill="none" stroke="#39ff14" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="59" cy="20" r="5" fill="#39ff14"/>
+        <circle cx="57.5" cy="19" r="1.4" fill="#11111a"/>
+        <g>
+          <rect x="60" y="58" width="22" height="22" rx="4" fill="#fff" stroke="#2a2a40" stroke-width="2"/>
+          <circle cx="66" cy="64" r="2.4" fill="#11111a"/>
+          <circle cx="76" cy="64" r="2.4" fill="#11111a"/>
+          <circle cx="71" cy="69" r="2.4" fill="#11111a"/>
+          <circle cx="66" cy="74" r="2.4" fill="#11111a"/>
+          <circle cx="76" cy="74" r="2.4" fill="#11111a"/>
+        </g>
+      </svg>`),
+    description:
+      "Roll the dice, climb ladders, avoid snakes, and race to the finish line.",
+    url: "/games/snakes-ladders",
+    slug: "snakes-ladders",
+    tags: ["Board Game", "Family", "Multiplayer", "Classic"],
+  },
+  {
+    name: "Ludo",
+    icon:
+      "data:image/svg+xml," +
+      encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+        <rect x="10" y="10" width="76" height="76" rx="6" fill="#fff5e1" stroke="#2a2a40" stroke-width="3"/>
+        <rect x="14" y="14" width="28" height="28" rx="4" fill="#ff2e2e"/>
+        <rect x="54" y="14" width="28" height="28" rx="4" fill="#39ff14"/>
+        <rect x="14" y="54" width="28" height="28" rx="4" fill="#00f0ff"/>
+        <rect x="54" y="54" width="28" height="28" rx="4" fill="#ffd23f"/>
+        <g fill="#fff5e1">
+          <circle cx="28" cy="28" r="7"/>
+          <circle cx="68" cy="28" r="7"/>
+          <circle cx="28" cy="68" r="7"/>
+          <circle cx="68" cy="68" r="7"/>
+        </g>
+        <polygon points="48,30 66,48 48,66 30,48" fill="#9d4dff"/>
+        <g>
+          <rect x="38" y="38" width="20" height="20" rx="4" fill="#fff" stroke="#2a2a40" stroke-width="2"/>
+          <circle cx="44" cy="44" r="2.2" fill="#11111a"/>
+          <circle cx="52" cy="44" r="2.2" fill="#11111a"/>
+          <circle cx="48" cy="48" r="2.2" fill="#11111a"/>
+          <circle cx="44" cy="52" r="2.2" fill="#11111a"/>
+          <circle cx="52" cy="52" r="2.2" fill="#11111a"/>
+        </g>
+      </svg>`),
+    description:
+      "Move your tokens around the board and be the first to get them all home.",
+    url: "/games/ludo",
+    slug: "ludo",
+    tags: ["Board Game", "Family", "Multiplayer", "Strategy"],
+  },
 
   /* ---------------------------------------------------------
      HOW TO ADD A NEW GAME
